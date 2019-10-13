@@ -5,8 +5,7 @@ Dient zur Organisation vom Praktikum in Datenkommunikation im WS2019/20
 Im Repo befindet sich eine Ecel, in der ein Projektplan enthalten ist und ein zugehöriges Gantt-Diagramm.
 
 # Projektboard
-Über ein Trello-Board werden alle Aufgaben festgehalten und organisiert.
-https://trello.com/b/S80z7eVB/datenkommunikation
+Über das interne Projektboard von github werden alle anstehenden Aufgaben verwaltet ud getrackt.  
 
 # SourceCode
 Der Source-Code zu dem Projekt liegt im Ordner DakoChattApplication.
