@@ -9,7 +9,7 @@ git clone https://github.com/simonsymhoven/Datenkommunikation.git
 
 Siehe [Aufgabenstellung.pdf](Aufgabenstellung_Studienarbeit_Datenkommunikation_WS_19_20.pdf) für Details zur Aufgabestellung.
 
-## Authors
+## Authoren
 **Marc** <br>
 **Magdalena** <br>
 **Simon** (@ottnorml) <br>
