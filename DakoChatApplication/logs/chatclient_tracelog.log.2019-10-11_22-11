@@ -1,4 +1,0 @@
-2019-10-11 22:11:15,905 DEBUG [Listener-simon.symhoven] edu.hm.dako.chat.client.SimpleMessageListenerThreadImpl: Ordnungsgemaesses Ende des SimpleMessageListener-Threads fuer Usersimon.symhoven, Status: REGISTERED
-2019-10-11 22:11:20,210 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.AbstractChatClient: Senden der Chat-Nachricht nicht moeglich
-2019-10-11 22:11:20,210 ERROR [Client-simon.symhoven] edu.hm.dako.chat.client.LoggedInGuiController: Senden konnte nicht durchgefuehrt werden, Server aktiv?
-2019-10-11 22:11:20,210 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.ClientFxGUI: errorMessage: Die Nachricht konnte nicht gesendet werden, da der Server unter Umständen nicht mehr läuft. Sie werden abgemeldet...

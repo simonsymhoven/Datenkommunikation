@@ -1,4 +1,0 @@
-2019-10-11 22:13:15,861 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Ordnungsgemaesses Ende des AdvancedMessage-Listener-Threads fuer Userd, Status: REGISTERED
-2019-10-11 22:13:19,381 DEBUG [Client-d] edu.hm.dako.chat.client.AbstractChatClient: Senden der Logout-Nachricht nicht moeglich
-2019-10-11 22:13:19,382 ERROR [Client-d] edu.hm.dako.chat.client.LoggedInGuiController: Logout konnte nicht durchgefuehrt werden, Server aktiv?
-2019-10-11 22:13:19,382 DEBUG [Client-d] edu.hm.dako.chat.client.ClientFxGUI: errorMessage: Abmelden beim Server nicht erfolgreich, da der Server vermutlich nicht aktiv ist. Sie werden abgemeldet...

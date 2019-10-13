@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="audit_log_server-1.0">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/audit_log_server/build/libs/audit_log_server-1.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

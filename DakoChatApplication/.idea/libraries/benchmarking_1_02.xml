@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="benchmarking-1.02">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/benchmarking/build/libs/benchmarking-1.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

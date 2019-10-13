@@ -1,8 +1,0 @@
-2019-10-11 22:11:15,903 ERROR [JavaFX Application Thread] edu.hm.dako.chat.server.SimpleChatServerImpl: Verbindung zu Client simon.symhoven geschlossen
-2019-10-11 22:11:15,904 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: End of File beim Empfang, vermutlich Verbindungsabbau des Partners fuer simon.symhoven
-2019-10-11 22:11:15,907 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: simon.symhoven beendet sich
-2019-10-11 22:11:15,905 DEBUG [Thread-5] edu.hm.dako.chat.server.SimpleChatServerImpl: Socket wurde geschlossen
-2019-10-11 22:11:15,904 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.SimpleChatServerImpl: Listen-Socket geschlossen
-2019-10-11 22:11:15,909 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Schliessen der Chat-Connection zum simon.symhoven
-2019-10-11 22:11:15,909 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SharedChatClientList: User nicht in Clientliste: simon.symhoven
-2019-10-11 22:11:15,909 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.SimpleChatServerImpl: Threadpool freigegeben

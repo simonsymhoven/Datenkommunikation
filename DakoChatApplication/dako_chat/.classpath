@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="audit_log_server/src/main/java"/>
+	<classpathentry kind="src" path="benchmarking/src/main/java"/>
+	<classpathentry kind="src" path="client/src/main/java"/>
+	<classpathentry kind="src" path="common/src/main/java"/>
+	<classpathentry kind="src" path="server/src/main/java"/>
+	<classpathentry kind="src" path="tcp/src/main/java"/>
+	<classpathentry kind="src" path="udp/src/main/java"/>
+	<classpathentry kind="lib" path="audit_log_server/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="benchmarking/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="client/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="common/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="libs/jfxrt.jar"/>
+	<classpathentry kind="lib" path="libs/jfxswt.jar"/>
+	<classpathentry kind="lib" path="nioserver/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="server/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="tcp/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="udp/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

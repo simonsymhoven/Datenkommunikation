@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="tcp-1.01">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dako_chat/tcp/build/libs/tcp-1.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
