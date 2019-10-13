@@ -1,0 +1,27 @@
+2019-10-11 22:12:35,067 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.LogInGuiController: Benutzername ist leer
+2019-10-11 22:12:35,067 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.ClientFxGUI: errorMessage: Benutzername fehlt
+2019-10-11 22:12:38,556 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.AbstractChatClient: Verbindung zum Server steht
+2019-10-11 22:12:38,557 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten
+2019-10-11 22:12:38,558 DEBUG [Client-d] edu.hm.dako.chat.client.AbstractChatClient: Login-Request-PDU fuer Client d an Server gesendet
+2019-10-11 22:12:38,567 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Nach receive Aufruf, ankommende PDU mit PduType = Login-Event
+2019-10-11 22:12:38,568 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: d erhaelt LoginEvent, LoginEventCounter: 2
+2019-10-11 22:12:38,568 DEBUG [Thread-7] edu.hm.dako.chat.client.AbstractMessageListenerThread: Login- oder Logout-Event-PDU fuer d empfangen
+2019-10-11 22:12:38,569 DEBUG [Thread-7] edu.hm.dako.chat.client.AbstractMessageListenerThread: Empfangene Userliste: [d]
+2019-10-11 22:12:38,569 DEBUG [Client-d] edu.hm.dako.chat.client.ClientFxGUI: [*d*]
+2019-10-11 22:12:38,569 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Login-Event-Confirm-PDU fuer d bzgl. eines urspruenglichen Events von d an den Server gesendet
+2019-10-11 22:12:38,570 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten
+2019-10-11 22:12:38,571 DEBUG [Thread-7] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Nach receive Aufruf, ankommende PDU mit PduType = Login-Response
+2019-10-11 22:12:38,571 DEBUG [Thread-7] edu.hm.dako.chat.client.ClientFxGUI: Login erfolreich
+2019-10-11 22:12:38,605 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Login-Response-PDU fuer Client d empfangen
+2019-10-11 22:12:38,605 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten
+2019-10-11 22:12:51,483 DEBUG [Client-d] edu.hm.dako.chat.client.AbstractChatClient: Chat-Message-Request-PDU fuer Client d an Server gesendet, Inhalt: Wieder da mit TCPAdvanced
+2019-10-11 22:12:51,483 DEBUG [Client-d] edu.hm.dako.chat.client.AbstractChatClient: MessageCounter: 1, SequenceNumber: 1
+2019-10-11 22:12:51,487 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Nach receive Aufruf, ankommende PDU mit PduType = Chat-Message-Event
+2019-10-11 22:12:51,487 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Chat-Message-Event-PDU von d empfangen
+2019-10-11 22:12:51,487 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: MessageEventCounter: 3
+2019-10-11 22:12:51,487 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Chat-Message-Event-Confirm-PDU fuer d bzgl. eines urspruenglichen Events von d an den Server gesendet
+2019-10-11 22:12:51,487 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten
+2019-10-11 22:12:51,490 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Nach receive Aufruf, ankommende PDU mit PduType = Chat-Message-Response
+2019-10-11 22:12:51,490 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Sequenznummer der Chat-Response-PDU d: 1, Messagecounter: 1
+2019-10-11 22:12:51,490 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Chat-Response-PDU fuer Client d empfangen, Serverbearbeitungszeit: 5 ms
+2019-10-11 22:12:51,490 DEBUG [Listener-d] edu.hm.dako.chat.client.AdvancedMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="gradle-wrapper12">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dako_chat/udp/gradle/wrapper/gradle-wrapper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

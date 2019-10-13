@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/audit_log_server/src/main/audit_log_server.iml" filepath="$PROJECT_DIR$/audit_log_server/src/main/audit_log_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/benchmarking/src/main/benchmarking.iml" filepath="$PROJECT_DIR$/benchmarking/src/main/benchmarking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/client/src/main/client.iml" filepath="$PROJECT_DIR$/client/src/main/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/src/main/common.iml" filepath="$PROJECT_DIR$/common/src/main/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/src/main/server.iml" filepath="$PROJECT_DIR$/server/src/main/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcp/src/main/tcp.iml" filepath="$PROJECT_DIR$/tcp/src/main/tcp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/udp/src/main/udp.iml" filepath="$PROJECT_DIR$/udp/src/main/udp.iml" />
+    </modules>
+  </component>
+</project>

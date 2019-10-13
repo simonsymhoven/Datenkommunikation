@@ -1,0 +1,6 @@
+2019-10-11 22:09:26,279 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.client.AbstractChatClient: Verbindung zum Server steht
+2019-10-11 22:09:26,281 DEBUG [Thread-5] edu.hm.dako.chat.client.SimpleMessageListenerThreadImpl: SimpleMessageListenerThread gestartet
+2019-10-11 22:09:26,281 DEBUG [Thread-5] edu.hm.dako.chat.client.SimpleMessageListenerThreadImpl: Auf die naechste Nachricht vom Server warten
+2019-10-11 22:09:26,282 DEBUG [Thread-5] edu.hm.dako.chat.client.SimpleMessageListenerThreadImpl: Ordnungsgemaesses Ende des SimpleMessageListener-Threads fuer Usersimon.symhoven, Status: REGISTERING
+2019-10-11 22:09:26,284 ERROR [Client-simon.symhoven] edu.hm.dako.chat.client.LogInGuiController: Login konnte nicht zum Server gesendet werden, Server aktiv?
+2019-10-11 22:09:26,284 DEBUG [Client-simon.symhoven] edu.hm.dako.chat.client.ClientFxGUI: errorMessage: Login konnte nicht gesendet werden, vermutlich ist der Server nicht aktiv

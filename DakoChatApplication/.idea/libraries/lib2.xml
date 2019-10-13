@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="lib2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/common-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/audit_log_server-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/error_prone_annotations-2.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/j2objc-annotations-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/failureaccess-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/animal-sniffer-annotations-1.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/jsr305-3.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/guava-27.0.1-jre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/server-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/tcp-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/jfxswt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/commons-math3-3.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/checker-qual-2.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/udp-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/jfxrt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dako_chat/server/build/install/server/lib/log4j-1.2.17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

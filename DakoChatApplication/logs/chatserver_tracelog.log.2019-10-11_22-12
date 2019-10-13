@@ -1,0 +1,42 @@
+2019-10-11 22:12:32,200 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ServerFactory: ChatServer (TCPAdvancedImplementation) wird gestartet, Serverport: 50001, Sendepuffer: 300000, Empfangspuffer: 300000
+2019-10-11 22:12:32,203 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: TcpChatAdvancedServerImpl konstruiert
+2019-10-11 22:12:38,556 DEBUG [Thread-7] edu.hm.dako.chat.server.AdvancedChatServerImpl: Neuer Verbindungsaufbauwunsch empfangen
+2019-10-11 22:12:38,560 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: ChatWorker-Thread erzeugt, Threadname: pool-3-thread-1
+2019-10-11 22:12:38,563 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login Request
+2019-10-11 22:12:38,563 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login-Request-PDU fuer d empfangen
+2019-10-11 22:12:38,563 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.SharedChatClientList: User nicht in Clientliste: d
+2019-10-11 22:12:38,564 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: User nicht in Clientliste: d
+2019-10-11 22:12:38,564 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.SharedChatClientList: User d nun in Status: REGISTERING
+2019-10-11 22:12:38,564 DEBUG [pool-3-thread-1] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: User d nun in Clientliste
+2019-10-11 22:12:38,564 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Laenge der Clientliste: 1
+2019-10-11 22:12:38,564 DEBUG [d] edu.hm.dako.chat.server.ChatServerGUI: Eingeloggte Clients: 1
+2019-10-11 22:12:38,564 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Warteliste fuer d erzeugt
+2019-10-11 22:12:38,564 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: run-Methode wird ausgefuehrt
+2019-10-11 22:12:38,564 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: Logged in Clients: 1
+2019-10-11 22:12:38,565 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login- oder Logout-Event-PDU an d, ClientListe:  [d]
+2019-10-11 22:12:38,566 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d: EventCounter bei Login/Logout erhoeht = 1, ConfirmCounter = 0
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login-Event-Confirm-PDU von Client d fuer initierenden d empfangen
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d: ConfirmCounter fuer Login erhoeht = 1, Aktueller EventCounter = 1
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login-EventConfirm: Event-Initiator: d, Confirm-Sender: d
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d aus der Warteliste von d austragen
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Client: d, aus Warteliste von d loeschen 
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Eintrag fuer d aus der Warteliste von d geloescht
+2019-10-11 22:12:38,570 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Warteliste von d ist nun leer, alle Login-Event-Confirms erhalten
+2019-10-11 22:12:38,571 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Login-Response-PDU an Client d gesendet
+2019-10-11 22:12:38,571 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: User d nun in Status: REGISTERED
+2019-10-11 22:12:51,483 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Chat-Message-Request-PDU von d mit Sequenznummer 1 empfangen
+2019-10-11 22:12:51,483 DEBUG [d] edu.hm.dako.chat.server.ChatServerGUI: 1 emfangene Message Requests
+2019-10-11 22:12:51,484 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Warteliste fuer d erzeugt
+2019-10-11 22:12:51,484 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Warteliste: [d]
+2019-10-11 22:12:51,484 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: run-Methode wird ausgefuehrt
+2019-10-11 22:12:51,484 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Anzahl der User in der Warteliste: 1
+2019-10-11 22:12:51,485 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: Received Requests: 1
+2019-10-11 22:12:51,485 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Chat-Event-PDU an d gesendet
+2019-10-11 22:12:51,485 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d: EventCounter erhoeht = 2, Aktueller ConfirmCounter = 1, Anzahl gesendeter ChatMessages von dem Client = 1
+2019-10-11 22:12:51,486 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Aktuelle Laenge der Clientliste: 1
+2019-10-11 22:12:51,486 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Startzeit fuer Benutzer d gesetzt: 237345967518933
+2019-10-11 22:12:51,488 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Chat-Message-Event-Confirm-PDU von d fuer initierenden Client d empfangen
+2019-10-11 22:12:51,488 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d: ConfirmCounter fuer ChatMessage erhoeht = 2, Aktueller EventCounter = 2, Anzahl gesendeter ChatMessages von dem Client = 0
+2019-10-11 22:12:51,488 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Client: d, aus Warteliste von d loeschen 
+2019-10-11 22:12:51,488 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: Eintrag fuer d aus der Warteliste von d geloescht
+2019-10-11 22:12:51,489 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Chat-Message-Response-PDU an d gesendet

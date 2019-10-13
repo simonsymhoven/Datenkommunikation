@@ -1,0 +1,39 @@
+2019-10-11 22:10:31,759 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: ChatServer soll mit AuditLog gestartet werden
+2019-10-11 22:10:31,763 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ServerFactory: ChatServer wird mit AuditLogServer gestartet, ChatServer Port: 50001, Sendepuffer: 300000, Empfangspuffer: 300000, AuditLogServer Port: 40001, AuditLogServer Hostname or IP: localhost
+2019-10-11 22:10:32,076 ERROR [JavaFX Application Thread] edu.hm.dako.chat.server.AuditLogConnection: Exception bei Verbindungsaufbau zum Auditlog-Server
+2019-10-11 22:10:32,077 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ServerFactory: Verbindung zum AuditLog-Server konnte nicht aufgebaut werden
+2019-10-11 22:10:32,085 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.SimpleChatServerImpl: SimpleChatServerImpl mit AuditLogServer konstruiert
+2019-10-11 22:10:34,848 DEBUG [Thread-5] edu.hm.dako.chat.server.SimpleChatServerImpl: Neuer Verbindungsaufbauwunsch empfangen
+2019-10-11 22:10:34,852 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: ChatWorker-Thread erzeugt, Threadname: pool-2-thread-1
+2019-10-11 22:10:34,872 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Login-Request-PDU fuer simon.symhoven empfangen
+2019-10-11 22:10:34,872 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SharedChatClientList: User nicht in Clientliste: simon.symhoven
+2019-10-11 22:10:34,872 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: User nicht in Clientliste: simon.symhoven
+2019-10-11 22:10:34,873 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SharedChatClientList: User simon.symhoven nun in Status: REGISTERING
+2019-10-11 22:10:34,874 DEBUG [pool-2-thread-1] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: User simon.symhoven nun in Clientliste
+2019-10-11 22:10:34,874 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Laenge der Clientliste: 1
+2019-10-11 22:10:34,874 DEBUG [simon.symhoven] edu.hm.dako.chat.server.ChatServerGUI: Eingeloggte Clients: 1
+2019-10-11 22:10:34,875 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: run-Methode wird ausgefuehrt
+2019-10-11 22:10:34,875 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Aktuelle Clientliste, die an die Clients uebertragen wird: [simon.symhoven]
+2019-10-11 22:10:34,876 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: Logged in Clients: 1
+2019-10-11 22:10:34,876 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Fuer simon.symhoven wird Login- oder Logout-Event-PDU an alle aktiven Clients gesendet
+2019-10-11 22:10:34,894 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Login- oder Logout-Event-PDU an simon.symhoven gesendet
+2019-10-11 22:10:34,895 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Login-Response-PDU an Client simon.symhoven gesendet
+2019-10-11 22:10:34,895 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SharedChatClientList: User simon.symhoven nun in Status: REGISTERED
+2019-10-11 22:10:42,968 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SharedChatClientList: Startzeit fuer Benutzer simon.symhoven gesetzt: 237217456483979
+2019-10-11 22:10:42,968 DEBUG [simon.symhoven] edu.hm.dako.chat.server.ChatServerGUI: 1 emfangene Message Requests
+2019-10-11 22:10:42,970 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Message-Request-PDU von simon.symhoven mit Sequenznummer 1 empfangen
+2019-10-11 22:10:42,971 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: run-Methode wird ausgefuehrt
+2019-10-11 22:10:42,972 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: Received Requests: 1
+2019-10-11 22:10:42,974 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Event-PDU an simon.symhoven gesendet
+2019-10-11 22:10:42,974 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: simon.symhoven: EventCounter erhoeht = 2, Aktueller ConfirmCounter = 0, Anzahl gesendeter ChatMessages von dem Client = 1
+2019-10-11 22:10:42,975 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Message-Response-PDU an simon.symhoven gesendet
+2019-10-11 22:10:42,975 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Aktuelle Laenge der Clientliste: 1
+2019-10-11 22:10:54,999 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SharedChatClientList: Startzeit fuer Benutzer simon.symhoven gesetzt: 237229487568451
+2019-10-11 22:10:55,000 DEBUG [simon.symhoven] edu.hm.dako.chat.server.ChatServerGUI: 2 emfangene Message Requests
+2019-10-11 22:10:55,000 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Message-Request-PDU von simon.symhoven mit Sequenznummer 2 empfangen
+2019-10-11 22:10:55,000 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Event-PDU an simon.symhoven gesendet
+2019-10-11 22:10:55,000 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: simon.symhoven: EventCounter erhoeht = 3, Aktueller ConfirmCounter = 0, Anzahl gesendeter ChatMessages von dem Client = 2
+2019-10-11 22:10:55,001 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Chat-Message-Response-PDU an simon.symhoven gesendet
+2019-10-11 22:10:55,001 DEBUG [simon.symhoven] edu.hm.dako.chat.server.SimpleChatWorkerThreadImpl: Aktuelle Laenge der Clientliste: 1
+2019-10-11 22:10:55,001 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: run-Methode wird ausgefuehrt
+2019-10-11 22:10:55,005 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: runLater: Received Requests: 2

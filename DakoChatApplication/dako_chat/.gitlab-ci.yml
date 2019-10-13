@@ -1,0 +1,52 @@
+image: openjdk:8-jdk
+#image: gbpm:openjdk-jfx-8
+#image: adoptopenjdk/openjdk8:jdk8u212-b04
+#image: adoptopenjdk/openjdk9:jdk-9.0.4.11-slim
+
+# Code Quality
+#include:
+#  - template: Code-Quality.gitlab-ci.yml
+
+stages:
+  - build
+  - test
+##  - deploy
+
+#variables:
+#  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+#  - echo `pwd` # debug
+#  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assemble
+  artifacts:
+    paths:
+#      - build/libs/*.jar
+      - "*/build/distributions/*.tar"
+      - "*/build/distributions/*.zip"
+    expire_in: 1 week
+  only:
+    - master
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
+
+#deploy:
+#  stage: deploy
+#  script:
+#    - ./deploy
+
+after_script:
+  - echo "End CI"

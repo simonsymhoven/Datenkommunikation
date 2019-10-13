@@ -1,0 +1,11 @@
+2019-10-11 22:13:15,861 ERROR [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: Verbindung zu Client d geschlossen
+2019-10-11 22:13:15,861 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: End of File beim Empfang, vermutlich Verbindungsabbau des Partners fuer d
+2019-10-11 22:13:15,863 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: Listen-Socket geschlossen
+2019-10-11 22:13:15,863 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: d beendet sich
+2019-10-11 22:13:15,863 DEBUG [d] edu.hm.dako.chat.server.AdvancedChatWorkerThreadImpl: Schliessen der Chat-Connection zum d
+2019-10-11 22:13:15,863 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: Threadpool freigegeben
+2019-10-11 22:13:15,863 DEBUG [Thread-7] edu.hm.dako.chat.server.AdvancedChatServerImpl: Socket wurde geschlossen
+2019-10-11 22:13:15,863 DEBUG [d] edu.hm.dako.chat.server.SharedChatClientList: User nicht in Clientliste: d
+2019-10-11 22:13:17,131 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: Listen-Socket geschlossen
+2019-10-11 22:13:17,132 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.AdvancedChatServerImpl: Threadpool freigegeben
+2019-10-11 22:13:17,132 DEBUG [JavaFX Application Thread] edu.hm.dako.chat.server.ChatServerGUI: Schliessen-Button betaetigt

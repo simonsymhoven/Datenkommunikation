@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="client-1.02">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dako_chat/client/build/distributions/client-1.0.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
