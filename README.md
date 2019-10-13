@@ -17,10 +17,10 @@ git clone https://github.com/simonsymhoven/Datenkommunikation.git
 Siehe [Aufgabenstellung.pdf](Aufgabenstellung_Studienarbeit_Datenkommunikation_WS_19_20.pdf) für Details zur Aufgabestellung.
 
 ## Authoren
-**Marc** <br>
+**Marc** [(@marc-daniel)](https://github.com/marc-daniel)<br>
 **Magdalena** <br>
-**Simon** (@ottnorml) <br>
-**Simon** (@simonsymhoven) <br> 
+**Simon** [(@ottnorml)](https://github.com/ottnorml) <br>
+**Simon** [(@simonsymhoven)](https://github.com/simonsymhoven) <br> 
 
 ## Deployment
 Client und Server werden über die main-Methode der [ClientFxGUI.java](DakoChatApplication_Graddle/src/main/java/edu/hm/dako/chat/client/ClientFxGUI.java) bzw. [ChatServerGUI.java](DakoChatApplication_Graddle/src/main/java/edu/hm/dako/chat/server/ChatServerGUI.java) Klasse gestartet.
