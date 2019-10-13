@@ -16,7 +16,7 @@ Siehe [Aufgabenstellung.pdf](Aufgabenstellung_Studienarbeit_Datenkommunikation_W
 **Simon** (@simonsymhoven) <br> 
 
 ## Deployment
-Server und Client werden über die main-Klasse im jeweiligen package gestartet.
+Server und Client werden über die main-Methode der [ClientFxGUI.java](DakoChatApplication/client/src/main/java/edu/hm/dako/chat/client/ClientFxGUI.java) bzw. [ChatServerGUI.java](DakoChatApplication/server/src/main/java/edu/hm/dako/chat/server/ChatServerGUI.java) gestartet.
 
 ## Projektplan
 Im Repo befindet sich eine Excel, in der ein Projektplan enthalten ist und ein zugehöriges Gantt-Diagramm.
