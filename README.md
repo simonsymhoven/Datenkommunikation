@@ -16,10 +16,10 @@ Siehe [Aufgabenstellung.pdf](Aufgabenstellung_Studienarbeit_Datenkommunikation_W
 **Simon** (@simonsymhoven) <br> 
 
 ## Deployment
-Server und Client werden über die main-Methode der [ClientFxGUI.java](DakoChatApplication/client/src/main/java/edu/hm/dako/chat/client/ClientFxGUI.java) bzw. [ChatServerGUI.java](DakoChatApplication/server/src/main/java/edu/hm/dako/chat/server/ChatServerGUI.java) gestartet.
+Client und Server werden über die main-Methode der [ClientFxGUI.java](DakoChatApplication/client/src/main/java/edu/hm/dako/chat/client/ClientFxGUI.java) bzw. [ChatServerGUI.java](DakoChatApplication/server/src/main/java/edu/hm/dako/chat/server/ChatServerGUI.java) Klasse gestartet.
 
 ## Projektplan
-Im Repo befindet sich eine Excel, in der ein Projektplan enthalten ist und ein zugehöriges Gantt-Diagramm.
+Im Repo befindet sich eine Excel, in der ein Projektplan enthalten ist und ein zugehöriges Gantt-Diagramm. Die rote vertiakle, gestrichelte Linie zeigt das aktuelle Datum.
 
 ## Projektboard
 Über das interne Projektboard von Github werden alle anstehenden Aufgaben verwaltet und getrackt. Diese können jemandem zugeordent werden, mit Labels versehen werden, Pull-Requests zugeordnet werden usw und diese automatisch als Issues angelegt werden, die dann über den Issue Reiter kommentiert werden können um so den Fortschirtt und Probleme bei der Bearbeitung festzuhalten.
@@ -32,8 +32,8 @@ Im master-Branch befindet sich immer eine auffähige Version der Chatt-Applicati
 Das Repo enthält einen Ordner **Aufgabe 1**, in dem alle erzeugten Diagramme zur Dokumentation gesammelt werden. Dort liegt außerdem eine .ppt-Vorlage, in der nachher die Charts einfügen werden können.
 
 ## Teilaufgabe 2
-noch nicht begonnen
+-
 
 ## Teilaufgabe 3
-noch nicht begonnen
+-
 
