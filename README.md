@@ -1,11 +1,11 @@
 # Datenkommunikation
 Dient zur Organisation vom Praktikum in Datenkommunikation im WS2019/20.
 
-#Mitglieder
-**Marc**
-**Magdalena**
-**Simon** (@ottnorml)
-**Simon** (@simonsymhoven)
+# Mitglieder
+**Marc** <br>
+**Magdalena** <br>
+**Simon** (@ottnorml) <br>
+**Simon** (@simonsymhoven) <br> 
 # Projektplan
 Im Repo befindet sich eine Excel, in der ein Projektplan enthalten ist und ein zugehöriges Gantt-Diagramm.
 
