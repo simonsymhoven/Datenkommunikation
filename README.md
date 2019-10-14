@@ -18,7 +18,7 @@ Siehe [Aufgabenstellung.pdf](Aufgabenstellung_Studienarbeit_Datenkommunikation_W
 
 ## Authoren
 **Marc** [(marc-daniel)](https://github.com/marc-daniel)<br>
-**Magdalena** [hegel-magdalena](https://github.com/hegel-magdalena)<br>
+**Magdalena** [(hegel-magdalena)](https://github.com/hegel-magdalena)<br>
 **Simon** [(ottnorml)](https://github.com/ottnorml) <br>
 **Simon** [(simonsymhoven)](https://github.com/simonsymhoven) <br> 
 
