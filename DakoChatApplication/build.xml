@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="dakochatapplication" default="all">
-  
-  
+
+
   <property file="build.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
-  <!-- 
+  <!--
   <property name="skip.tests" value="true"/>
    -->
-  
+
   <!-- Compiler options -->
-  
+
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
@@ -52,9 +52,9 @@
     <exclude name="**/?*.clj"/>
     <exclude name="**/?*.aj"/>
   </patternset>
-  
+
   <!-- JDK definitions -->
-  
+
   <property name="jdk.bin.11.0.4" value="${jdk.home.11.0.4}/bin"/>
   <path id="jdk.classpath.11.0.4">
     <fileset dir="${jdk.home.11.0.4}">
@@ -124,14 +124,14 @@
       <include name="../Home!/jdk.zipfs"/>
     </fileset>
   </path>
-  
+
   <property name="project.jdk.home" value="${jdk.home.11.0.4}"/>
   <property name="project.jdk.bin" value="${jdk.bin.11.0.4}"/>
   <property name="project.jdk.classpath" value="jdk.classpath.11.0.4"/>
-  
-  
+
+
   <!-- Project Libraries -->
-  
+
   <path id="library.lib.classpath">
     <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
     <pathelement location="${basedir}/lib/commons-math3-3.6.jar"/>
@@ -143,7 +143,7 @@
     <pathelement location="${basedir}/lib/log4j-1.2.15.jar"/>
     <pathelement location="${basedir}/lib/metrics.jar"/>
   </path>
-  
+
   <path id="library.lib_mac.classpath">
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_mac/javafx-swt.jar"/>
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_mac/javafx.base.jar"/>
@@ -154,7 +154,7 @@
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_mac/javafx.swing.jar"/>
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_mac/javafx.web.jar"/>
   </path>
-  
+
   <path id="library.lib_win.classpath">
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_win/javafx-swt.jar"/>
     <pathelement location="${basedir}/lib/javafx-sdk-13/lib_win/javafx.base.jar"/>
@@ -179,42 +179,42 @@
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
     <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
   </target>
-  
+
   <!-- Modules -->
-  
-  
+
+
   <!-- Module DakoChatApplication -->
-  
+
   <dirname property="module.dakochatapplication.basedir" file="${ant.file}"/>
-  
-  
+
+
   <property name="module.jdk.home.dakochatapplication" value="${project.jdk.home}"/>
   <property name="module.jdk.bin.dakochatapplication" value="${project.jdk.bin}"/>
   <property name="module.jdk.classpath.dakochatapplication" value="${project.jdk.classpath}"/>
-  
+
   <property name="compiler.args.dakochatapplication" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
-  
+
   <property name="dakochatapplication.output.dir" value="${module.dakochatapplication.basedir}/out/production/DakoChatApplication"/>
   <property name="dakochatapplication.testoutput.dir" value="${module.dakochatapplication.basedir}/out/test/DakoChatApplication"/>
-  
+
   <path id="dakochatapplication.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
-  
+
   <path id="dakochatapplication.module.production.classpath">
     <path refid="${module.jdk.classpath.dakochatapplication}"/>
     <path refid="library.lib.classpath"/>
     <path refid="library.lib_mac.classpath"/>
     <path refid="library.lib_win.classpath"/>
   </path>
-  
+
   <path id="dakochatapplication.runtime.production.module.classpath">
     <pathelement location="${dakochatapplication.output.dir}"/>
     <path refid="library.lib.classpath"/>
     <path refid="library.lib_mac.classpath"/>
     <path refid="library.lib_win.classpath"/>
   </path>
-  
+
   <path id="dakochatapplication.module.classpath">
     <path refid="${module.jdk.classpath.dakochatapplication}"/>
     <pathelement location="${dakochatapplication.output.dir}"/>
@@ -222,7 +222,7 @@
     <path refid="library.lib_mac.classpath"/>
     <path refid="library.lib_win.classpath"/>
   </path>
-  
+
   <path id="dakochatapplication.runtime.module.classpath">
     <pathelement location="${dakochatapplication.testoutput.dir}"/>
     <pathelement location="${dakochatapplication.output.dir}"/>
@@ -230,25 +230,25 @@
     <path refid="library.lib_mac.classpath"/>
     <path refid="library.lib_win.classpath"/>
   </path>
-  
-  
+
+
   <patternset id="excluded.from.module.dakochatapplication">
     <patternset refid="ignored.files"/>
   </patternset>
-  
+
   <patternset id="excluded.from.compilation.dakochatapplication">
     <patternset refid="excluded.from.module.dakochatapplication"/>
   </patternset>
-  
+
   <path id="dakochatapplication.module.sourcepath">
     <dirset dir="${module.dakochatapplication.basedir}">
       <include name="src/main/java"/>
     </dirset>
   </path>
-  
-  
+
+
   <target name="compile.module.dakochatapplication" depends="compile.module.dakochatapplication.production,compile.module.dakochatapplication.tests" description="Compile module DakoChatApplication"/>
-  
+
   <target name="compile.module.dakochatapplication.production" depends="register.custom.compilers" description="Compile module DakoChatApplication; production classes">
     <mkdir dir="${dakochatapplication.output.dir}"/>
     <javac2 destdir="${dakochatapplication.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dakochatapplication}/javac">
@@ -258,7 +258,7 @@
       <src refid="dakochatapplication.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.dakochatapplication"/>
     </javac2>
-    
+
     <copy todir="${dakochatapplication.output.dir}">
       <fileset dir="${module.dakochatapplication.basedir}/src/main/java">
         <patternset refid="compiler.resources"/>
@@ -266,21 +266,23 @@
       </fileset>
     </copy>
   </target>
-  
+
   <target name="compile.module.dakochatapplication.tests" depends="register.custom.compilers,compile.module.dakochatapplication.production" description="compile module DakoChatApplication; test classes" unless="skip.tests"/>
-  
+
   <target name="clean.module.dakochatapplication" description="cleanup module">
     <delete dir="${dakochatapplication.output.dir}"/>
     <delete dir="${dakochatapplication.testoutput.dir}"/>
   </target>
-  
+
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
-  
+
   <target name="clean" depends="clean.module.dakochatapplication" description="cleanup all"/>
-  
+
   <target name="build.modules" depends="init, clean, compile.module.dakochatapplication" description="build all modules"/>
-  
+
   <target name="all" depends="build.modules" description="build all"/>
+    <target name="test" description="testing"/>
+
 </project>
