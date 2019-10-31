@@ -2,7 +2,7 @@
   <configuration default="false" name="ClientFxGUI (Win)" type="Application" factoryName="Application" singleton="false">
     <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.client.ClientFxGUI" />
     <module name="DakoChatApplication" />
-    <option name="VM_PARAMETERS" value="--module-path  $ProjectFileDir$\lib\javafx-sdk-13\lib_win --add-modules=javafx.controls,javafx.fxml" />
+    <option name="VM_PARAMETERS" value="--module-path $ProjectFileDir$\lib\javafx-sdk-13\lib_win --add-modules=javafx.controls,javafx.fxml" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="edu.hm.dako.chat.client.*" />
