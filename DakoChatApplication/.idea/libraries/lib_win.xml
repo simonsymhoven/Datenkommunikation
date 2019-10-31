@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="lib_win">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx-swt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.base.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.controls.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.fxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.graphics.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.media.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/javafx.web.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.base" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.controls" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.fxml" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.graphics" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.media" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.swing" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_win/src.zip!/javafx.web" />
+    </SOURCES>
+  </library>
+</component>

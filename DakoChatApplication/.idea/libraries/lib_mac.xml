@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="lib_mac">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx-swt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.base.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.controls.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.fxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.graphics.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.media.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/javafx.web.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.base" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.controls" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.fxml" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.graphics" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.media" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.swing" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-sdk-13/lib_mac/src.zip!/javafx.web" />
+    </SOURCES>
+  </library>
+</component>
