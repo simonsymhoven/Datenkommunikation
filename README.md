@@ -7,10 +7,9 @@ git clone https://github.com/simonsymhoven/Datenkommunikation.git
 ```
 
 ## Getting started
-- Eclipse runterladen
-- Git Repo importieren
-- [e(fx)eclipse](https://o7planning.org/de/10619/die-installation-von-efxclipse-in-die-eclipse) installieren, falls nicht bereits vorhanden, aktuelle Version ist die *3.3.0*
-- Eventuell die im Pojekt verwendete JRE System Library auf 1.8 stellen
+- IntelliJ runterladen
+- Git Repo importieren (über Open)
+- Setup JDK (11.0.4)
 
 ## Aufgabenstellung
 
