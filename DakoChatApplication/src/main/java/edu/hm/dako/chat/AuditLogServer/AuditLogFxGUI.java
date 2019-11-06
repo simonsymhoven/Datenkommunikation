@@ -19,8 +19,8 @@ public class AuditLogFxGUI extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AuditLogLoginGUI.fxml"));
         Parent root = loader.load();
-        //AuditLogLoginGUIController lc = (AuditLogLoginGUIController) loader.getController();
-        //lc.setAppController(this);
+        AuditLogLoginGUIController lc = (AuditLogLoginGUIController) loader.getController();
+        lc.setAppController(this);
         primaryStage.setTitle("Anmelden");
         primaryStage.setScene(new Scene(root, 280, 320));
         root.setStyle("-fx-background-color: cornsilk");
