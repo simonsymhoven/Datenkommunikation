@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
 
 /**
  * Chat-GUI
- * 
+ *
  * @author Paul Mandl
  *
  */
@@ -43,9 +43,9 @@ public class ClientFxGUI extends Application implements ClientUserInterface {
 	/**
 	 * Kommunikationsschnittstelle zur Kommunikation mit dem Chat-Server
 	 * aktivieren
-	 * 
-	 * @param String
-	 *          serverType Servertyp
+	 *
+	 * @param serverType
+     *          Servertyp
 	 * @param port
 	 *          Serverport
 	 * @param host
