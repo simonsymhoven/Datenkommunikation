@@ -4,6 +4,11 @@ import edu.hm.dako.chat.common.AuditLogPDU;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
 public class AuditLogUdpServer {
 
 	private static Logger log = Logger.getLogger(AuditLogUdpServer.class);
@@ -21,11 +26,16 @@ public class AuditLogUdpServer {
 	// Zaehler fuer ankommende AuditLog-PDUs
 	protected long counter = 0;
 
+
 	public static void main(String[] args) {
 		PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties", 60 * 1000);
 		System.out.println("AuditLog-UdpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
 		log.info("AuditLog-UdpServer gestartet, Port" + AUDIT_LOG_SERVER_PORT);
-
-		//TODO: Implementierung des AuditLogServers auf UDP-Basis hier ergaenzen
 	}
+
+	public static DatagramSocket createAuditLogUdpServer() throws IOException {
+        main(null);
+        DatagramSocket udpSocket = new DatagramSocket(AUDIT_LOG_SERVER_PORT);
+        return udpSocket;
+    }
 }
