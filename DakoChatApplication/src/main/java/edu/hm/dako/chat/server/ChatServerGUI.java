@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.hm.dako.chat.AuditLogServer.AuditLogGUIController;
+import edu.hm.dako.chat.AuditLogServer.AuditLogUdpServer;
 import edu.hm.dako.chat.common.AuditLogImplementationType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -421,14 +422,13 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 						    startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
 									auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
                             try {
-                                AuditLogGUIController.start();
+                                new AuditLogUdpServer().start(new Stage());
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 setAlert(
                                     "Der AuditLogServer konnte nicht gestartet werden. Ein Fehler ist aufgetreten.");
                                 return;
                             }
-
 						} catch (Exception e) {
 							setAlert(
 									"Der Server konnte nicht gestartet werden oder die Verbindung zum AuditLogServer konnte " +
