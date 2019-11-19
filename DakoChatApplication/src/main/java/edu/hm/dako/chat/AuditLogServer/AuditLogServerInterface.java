@@ -29,4 +29,12 @@ public interface AuditLogServerInterface {
      *          Nachrichtentext
      */
     public void setMessageLine(String user, AuditLogPduType type, String message);
+
+
+    /**
+     * Schreibt Daten ins Log-File
+     * @param data
+     *          Nachricht die ins Logfile geschrieben werden soll
+     */
+    public void writeDataToLogFile(String data);
 }

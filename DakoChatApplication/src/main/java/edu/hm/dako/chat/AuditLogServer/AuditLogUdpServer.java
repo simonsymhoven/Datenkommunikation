@@ -1,13 +1,9 @@
 package edu.hm.dako.chat.AuditLogServer;
 
-import edu.hm.dako.chat.client.ClientModel;
-import edu.hm.dako.chat.client.LogInGuiController;
 import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.common.AuditLogPduType;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,13 +13,14 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class AuditLogUdpServer extends Application implements AuditLogServerInterface  {
 
@@ -42,7 +39,9 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 	public static void main(String[] args) {
 		PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties", 60 * 1000);
 		System.out.println("AuditLog-UdpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
+		launch(args);
 	}
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -129,13 +128,39 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getModel().messages.add("[USER] " + user +
-                    " | [TYPE] " + type + " | [MESSAGE] " + message);
+                String data = "[USER] " + user +
+                    " | [TYPE] " + type + " | [MESSAGE] " + message + "\n";
+                getModel().messages.add(data);
+                writeDataToLogFile(data);
             }
         });
     }
 
     public AuditLogModel getModel() {
         return model;
+    }
+
+
+    @Override
+    public void writeDataToLogFile(String data) {
+        Path path = Paths.get(System.getProperty("user.dir") + "/out/LogFiles/" + auditLogFile);
+        if (Files.notExists(path)) {
+            try {
+                Files.createFile(path);
+            } catch (Exception e) {
+                e.printStackTrace();
+                setErrorMessage("AuditLogServer",
+                    "Ordner ./out/LogFiles/" + auditLogFile + "konnte nicht angelegt werden.", 99);
+            }
+        }
+
+        try {
+            Files.write(Paths.get(System.getProperty("user.dir") + "/out/LogFiles/"
+                + auditLogFile), data.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+            setErrorMessage("AuditLogServer",
+                "Ein Fehler beim Schreiben in das Log-File ist aufgetreten.", 98);
+        }
     }
 }
