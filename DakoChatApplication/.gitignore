@@ -59,6 +59,9 @@ local.properties
 # Java annotation processor (APT)
 .factorypath
 
+#Log-Files
+*.dat
+
 # PDT-specific (PHP Development Tools)
 .buildpath
 

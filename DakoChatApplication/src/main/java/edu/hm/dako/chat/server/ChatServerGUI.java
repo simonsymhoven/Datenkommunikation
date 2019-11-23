@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.hm.dako.chat.AuditLogServer.AuditLogGUIController;
+import edu.hm.dako.chat.AuditLogServer.AuditLogUdpServer;
 import edu.hm.dako.chat.common.AuditLogImplementationType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -35,7 +37,7 @@ import javafx.stage.Stage;
 
 /**
  * Benutzeroberflaeche zum Starten des Chat-Servers
- * 
+ *
  * @author Paul Mandl
  *
  */
@@ -171,7 +173,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Eingabe-Pane erzeugen
-	 * 
+	 *
 	 * @return pane
 	 */
 	private GridPane createInputPane() {
@@ -209,7 +211,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 					auditLogServerHostnameOrIp.setEditable(true);
 					auditLogServerHostnameOrIp.setStyle("-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5px, 5px, 5px, 5px");
 					auditLogServerPort.setEditable(true);
-					auditLogServerPort.setStyle("-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5px, 5px, 5px, 5px");					
+					auditLogServerPort.setStyle("-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5px, 5px, 5px, 5px");
 					comboBoxAuditLogServerType.setEditable(true);
 					comboBoxAuditLogServerType.setStyle("-fx-background-color: white; -fx-border-color: lightgrey; -fx-border-radius: 5px, 5px, 5px, 5px");
 				}
@@ -246,7 +248,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Info-Pain erzeugen
-	 * 
+	 *
 	 * @return pane
 	 */
 	private GridPane createInfoPane() {
@@ -267,7 +269,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Pane fuer Buttons erzeugen
-	 * 
+	 *
 	 * @return HBox
 	 */
 	private HBox createButtonPane() {
@@ -284,7 +286,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Label erzeugen
-	 * 
+	 *
 	 * @param value
 	 * @return Label
 	 */
@@ -297,7 +299,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Aufbau der Combobox fuer die Serverauswahl in der GUI
-	 * 
+	 *
 	 * @param options Optionen fuer Implementierungstyp
 	 * @return Combobox
 	 */
@@ -313,7 +315,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Aufbau der Combobox fuer die AuditLog-Server Verbindung
-	 * 
+	 *
 	 * @param options Optionen fuer Verbindungstyp
 	 * @return Combobox
 	 */
@@ -328,7 +330,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 	}
 	/**
 	 * Trennlinie erstellen
-	 * 
+	 *
 	 * @param value
 	 *          Text der Trennlinie
 	 * @param size
@@ -355,7 +357,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Nicht editierbares Feld erzeugen
-	 * 
+	 *
 	 * @param value
 	 *          Feldinhalt
 	 * @return Textfeld
@@ -372,7 +374,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Erstellung editierbarer Textfelder
-	 * 
+	 *
 	 * @param value
 	 *          Feldinhalt
 	 * @return textField
@@ -417,8 +419,16 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 						String auditLogServerImplType = readAuditLogComboBox();
 
 						try {
-							startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
+						    startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
 									auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
+                            try {
+                                new AuditLogUdpServer().start(new Stage());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                setAlert(
+                                    "Der AuditLogServer konnte nicht gestartet werden. Ein Fehler ist aufgetreten.");
+                                return;
+                            }
 						} catch (Exception e) {
 							setAlert(
 									"Der Server konnte nicht gestartet werden oder die Verbindung zum AuditLogServer konnte " +
@@ -461,6 +471,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 				try {
 					chatServer.stop();
+                    AuditLogGUIController.stop();
 				} catch (Exception e) {
 					log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(e);
@@ -509,7 +520,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 		if (comboBoxAuditLogServerType.getValue() == null) {
 			 implType = new String(SystemConstants.AUDIT_LOG_SERVER_TCP_IMPL);
 		} else {
-		
+
 			 implType = new String(comboBoxAuditLogServerType.getValue().toString());
 		}
 		return (implType);
@@ -552,12 +563,12 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 			ExceptionHandler.logException(e);
 			throw new Exception(e);
 		}
-		
-		
+
+
 		if (startable == false) {
 			setAlert("Bitte Korrigieren sie die rot markierten Felder");
 		} else {
-	
+
 			if (!ServerFactory.isAuditLogServerConnected()) {
 				// AuditLog-Server Verbindung nicht vorhanden, in der GUI zeigen
 				enableAuditLogServerCheckbox.setSelected(false);
@@ -566,7 +577,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 				comboBoxAuditLogServerType.setEditable(false);
 				comboBoxAuditLogServerType.setStyle("-fx-background-color: gray;");
 			}
-			
+
 			// Server starten
 			chatServer.start();
 		}
@@ -574,7 +585,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Chat-Server starten
-	 * 
+	 *
 	 * @param implType
 	 *          Implementierungstyp, der zu starten ist
 	 * @param serverPort
@@ -636,7 +647,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Serverport aus GUI auslesen und pruefen
-	 * 
+	 *
 	 * @return Verwendeter Serverport
 	 */
 	private int readServerPort() {
@@ -661,7 +672,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Groesse des Sendepuffers in Byte auslesen und pruefen
-	 * 
+	 *
 	 * @return Eingegebene Sendpuffer-Groesse
 	 */
 	private int readSendBufferSize() {
@@ -686,7 +697,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	/**
 	 * Groesse des Empfangspuffers in Byte auslesen und pruefen
-	 * 
+	 *
 	 * @return Eingegebene Empfangspuffer-Groesse
 	 */
 	private int readReceiveBufferSize() {
