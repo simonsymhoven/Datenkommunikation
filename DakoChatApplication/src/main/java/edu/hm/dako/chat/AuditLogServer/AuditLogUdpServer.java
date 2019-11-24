@@ -143,10 +143,18 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 
     @Override
     public void writeDataToLogFile(String data) {
-        Path path = Paths.get(System.getProperty("user.dir") + "/out/LogFiles/" + auditLogFile);
-        if (Files.notExists(path)) {
+        String path = System.getProperty("user.dir");
+        String fileName = auditLogFile;
+        String dirName = "/out/LogFiles/";
+        File file = new File(path + dirName + "/" + fileName);
+        File dir = new File(path + dirName);
+        //Path path = Paths.get(System.getProperty("user.dir") + "/out/LogFiles/" + auditLogFile);
+        if (!file.exists()) {
             try {
-                Files.createFile(path);
+                if (!dir.exists()){
+                    dir.mkdir();
+                }
+                file.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
                 setErrorMessage("AuditLogServer",
