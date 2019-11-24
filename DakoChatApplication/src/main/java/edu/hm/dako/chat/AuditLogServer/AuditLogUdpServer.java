@@ -18,9 +18,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.Timestamp;
 
 public class AuditLogUdpServer extends Application implements AuditLogServerInterface  {
 
@@ -36,23 +36,21 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 	static final String auditLogFile = new String("ChatAuditLog.dat");
 	protected long counter = 0;
 
-	public static void main(String[] args) {
-		PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties", 60 * 1000);
-		System.out.println("AuditLog-UdpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
-		launch(args);
-	}
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
+        PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties", 60 * 1000);
+        System.out.println("AuditLog-UdpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
+        getModel().serverAddress = "127.0.0.1";
+
         FXMLLoader loader = new FXMLLoader(AuditLogGUIController.class.getResource("AuditLogGUI.fxml"));
         Parent root = loader.load();
         AuditLogGUIController lc = loader.getController();
         lc.setAppController(this);
         primaryStage.setTitle("AuditLogServerGUI");
         root.setStyle("-fx-background-color: cornsilk");
+        primaryStage.setOpacity(0.7);
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 415, 250));
+        primaryStage.setScene(new Scene(root, 800, 400));
         stage = primaryStage;
         primaryStage.show();
 
@@ -64,7 +62,7 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 
                 while (!Thread.currentThread().isInterrupted() && !socket.isClosed()) {
                     try {
-                        byte[] receive = new byte[DEFAULT_RECEIVEBUFFER_SIZE];
+                        byte[] receive = new byte[64000];
 
                         DatagramPacket packet = new DatagramPacket(receive, receive.length);
                         socket.receive(packet);
@@ -73,18 +71,18 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                         try (ObjectInput in = new ObjectInputStream(bis)) {
                             AuditLogPDU auditLogPDU = (AuditLogPDU) in.readObject();
                             counter++;
-                            InetAddress address = packet.getAddress();
-                            int port = packet.getPort();
-
                             System.out.println("*********** received message: *************");
                             System.out.println("user:    " + auditLogPDU.getUserName());
-                            System.out.println("address: " + address.toString());
-                            System.out.println("port:    " + port);
+                            System.out.println("address: " + packet.getAddress());
+                            System.out.println("port:    " + packet.getPort());
                             System.out.println("message: " + auditLogPDU.getMessage());
                             System.out.println("type:    " + auditLogPDU.getPduType());
+                            System.out.println("time:    " + new Timestamp(auditLogPDU.getAuditTime()));
                             System.out.println("*******************************************");
 
-                            setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(), auditLogPDU.getMessage());
+
+                            setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
+                                auditLogPDU.getMessage(), auditLogPDU.getAuditTime(), packet.getAddress(), packet.getPort());
 
                         } catch (IOException e) {
                             setErrorMessage("AuditLogServer",
@@ -108,6 +106,20 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
         th.start();
     }
 
+
+    @Override
+    public void stop(){
+        try {
+            stage.hide();
+            String message = "AuditLogServerGUI beendet, Gesendete AuditLog-Saetze: " + counter;
+            System.out.println(message);
+            writeDataToLogFile(message);
+        } catch (Exception e) {
+            System.out.println("Fehler beim Schliessen der AuditLogServerGUI");
+        }
+    }
+
+
     @Override
     public void setErrorMessage(String sender, String errorMessage, long errorCode) {
         log.debug("errorMessage: " + errorMessage);
@@ -124,12 +136,16 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     }
 
     @Override
-    public void setMessageLine(String user, AuditLogPduType type, String message) {
+    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime,
+                               InetAddress address, int port) {
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                String data = "[USER] " + user +
-                    " | [TYPE] " + type + " | [MESSAGE] " + message + "\n";
+                String data = "[TIME] " + new Timestamp(auditLogTime)
+                         + " | [SERVER ] " + address + "/" + port
+                         + " | [USER] " + user
+                         + " | [TYPE] " + type
+                         + " | [MESSAGE] " + message + "\n";
                 getModel().messages.add(data);
                 writeDataToLogFile(data);
             }

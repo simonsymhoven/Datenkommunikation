@@ -6,9 +6,9 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.hm.dako.chat.AuditLogServer.AuditLogGUIController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.hm.dako.chat.AuditLogServer.AuditLogGUIController">
    <children>
-      <Label text="AuditLog:" />
+      <Label fx:id="headerLabel" text="Verbindung zum Server mit der IP-Adresse " />
       <ScrollPane fx:id="sp" prefHeight="378.0" prefWidth="590.0">
          <content>
             <ListView fx:id="lv" prefHeight="344.0" prefWidth="577.0" />

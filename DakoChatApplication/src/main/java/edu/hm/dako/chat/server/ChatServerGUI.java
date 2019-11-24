@@ -62,6 +62,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	// Interface der Chat-Server-Implementierung
 	private static ChatServerInterface chatServer;
+	private static AuditLogUdpServer auditLogUdpServer;
 
 	// Server-Startzeit als String
 	private String startTimeAsString;
@@ -422,7 +423,8 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 						    startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
 									auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
                             try {
-                                new AuditLogUdpServer().start(new Stage());
+                                auditLogUdpServer = new AuditLogUdpServer();
+                                auditLogUdpServer.start(new Stage());
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 setAlert(
@@ -471,7 +473,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 				try {
 					chatServer.stop();
-                    AuditLogGUIController.stop();
+                    auditLogUdpServer.stop();
 				} catch (Exception e) {
 					log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(e);

@@ -3,6 +3,8 @@ package edu.hm.dako.chat.AuditLogServer;
 import edu.hm.dako.chat.common.AuditLogPduType;
 import javafx.application.Platform;
 
+import java.net.InetAddress;
+
 public interface AuditLogServerInterface {
     /**
      * Uebergabe einer Fehlermeldung
@@ -28,7 +30,7 @@ public interface AuditLogServerInterface {
      * @param message
      *          Nachrichtentext
      */
-    public void setMessageLine(String user, AuditLogPduType type, String message);
+    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime, InetAddress address, int port);
 
 
     /**
