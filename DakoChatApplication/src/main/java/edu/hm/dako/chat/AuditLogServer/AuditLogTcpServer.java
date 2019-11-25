@@ -80,6 +80,7 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
 
                         while (!Thread.currentThread().isInterrupted()) {
                             AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
+                            counter++;
                             System.out.println(auditLogPDU);
                             setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
                                 auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
