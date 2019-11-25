@@ -1,10 +1,14 @@
 package edu.hm.dako.chat.server;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import edu.hm.dako.chat.AuditLogServer.AuditLogGUIController;
+import edu.hm.dako.chat.AuditLogServer.AuditLogTcpServer;
 import edu.hm.dako.chat.AuditLogServer.AuditLogUdpServer;
 import edu.hm.dako.chat.common.AuditLogImplementationType;
 import javafx.beans.value.ChangeListener;
@@ -63,6 +67,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 	// Interface der Chat-Server-Implementierung
 	private static ChatServerInterface chatServer;
 	private static AuditLogUdpServer auditLogUdpServer;
+	private static AuditLogTcpServer auditLogTcpServer;
 
 	// Server-Startzeit als String
 	private String startTimeAsString;
@@ -419,12 +424,18 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 						int auditLogServerPort = readAuditLogServerPort();
 						String auditLogServerImplType = readAuditLogComboBox();
 
-						try {
-						    startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
-									auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
+                        try {
                             try {
-                                auditLogUdpServer = new AuditLogUdpServer();
-                                auditLogUdpServer.start(new Stage());
+                                if (readAuditLogComboBox().equals(SystemConstants.AUDIT_LOG_SERVER_TCP_IMPL)) {
+                                    auditLogTcpServer = new AuditLogTcpServer();
+                                    auditLogTcpServer.start(new Stage());
+                                } else if (readAuditLogComboBox().equals(SystemConstants.AUDIT_LOG_SERVER_UDP_IMPL)) {
+                                    auditLogUdpServer = new AuditLogUdpServer();
+                                    auditLogUdpServer.start(new Stage());
+                                }
+
+                                startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
+                                    auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 setAlert(
@@ -473,7 +484,11 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 				try {
 					chatServer.stop();
-                    auditLogUdpServer.stop();
+                    if (readAuditLogComboBox().equals(SystemConstants.AUDIT_LOG_SERVER_TCP_IMPL)) {
+                        auditLogTcpServer.stop();
+                    } else if (readAuditLogComboBox().equals(SystemConstants.AUDIT_LOG_SERVER_UDP_IMPL)) {
+                        auditLogUdpServer.stop();
+                    }
 				} catch (Exception e) {
 					log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(e);

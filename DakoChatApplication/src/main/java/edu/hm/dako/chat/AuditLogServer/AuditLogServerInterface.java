@@ -30,7 +30,7 @@ public interface AuditLogServerInterface {
      * @param message
      *          Nachrichtentext
      */
-    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime, InetAddress address, int port);
+    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime);
 
 
     /**

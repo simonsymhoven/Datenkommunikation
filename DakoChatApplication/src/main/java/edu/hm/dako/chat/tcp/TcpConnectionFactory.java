@@ -5,6 +5,7 @@ import java.net.BindException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import edu.hm.dako.chat.AuditLogServer.AuditLogTcpServer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -13,7 +14,7 @@ import edu.hm.dako.chat.connection.ConnectionFactory;
 
 /**
  * Erzeugen von TCP-Verbindungen zum Server
- * 
+ *
  * @author Peter Mandl
  *
  */
@@ -47,7 +48,6 @@ public class TcpConnectionFactory implements ConnectionFactory {
 			try {
 
 				connectionTryCounter++;
-
 				connection = new TcpConnection(
 						new Socket(remoteServerAddress, serverPort, localAddress, localPort),
 						sendBufferSize, receiveBufferSize, false, true);
@@ -59,9 +59,7 @@ public class TcpConnectionFactory implements ConnectionFactory {
 				log.error("BindException beim Verbindungsaufbau: " + e.getMessage());
 
 			} catch (IOException e) {
-
 				log.error("IOException beim Verbindungsaufbau: " + e.getMessage());
-
 				// Ein wenig warten und erneut versuchen
 				attempts++;
 				try {

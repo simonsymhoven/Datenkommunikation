@@ -2,6 +2,8 @@ package edu.hm.dako.chat.AuditLogServer;
 
 import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.common.AuditLogPduType;
+import edu.hm.dako.chat.udp.UdpServerConnection;
+import edu.hm.dako.chat.udp.UdpServerSocket;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -46,7 +48,7 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
         Parent root = loader.load();
         AuditLogGUIController lc = loader.getController();
         lc.setAppController(this);
-        primaryStage.setTitle("AuditLogServerGUI");
+        primaryStage.setTitle("AuditLogServerGUI (UDP)");
         root.setStyle("-fx-background-color: cornsilk");
         primaryStage.setOpacity(0.7);
         primaryStage.setResizable(false);
@@ -71,32 +73,27 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                         try (ObjectInput in = new ObjectInputStream(bis)) {
                             AuditLogPDU auditLogPDU = (AuditLogPDU) in.readObject();
                             counter++;
-                            System.out.println("*********** received message: *************");
-                            System.out.println("user:    " + auditLogPDU.getUserName());
-                            System.out.println("address: " + packet.getAddress());
-                            System.out.println("port:    " + packet.getPort());
-                            System.out.println("message: " + auditLogPDU.getMessage());
-                            System.out.println("type:    " + auditLogPDU.getPduType());
-                            System.out.println("time:    " + new Timestamp(auditLogPDU.getAuditTime()));
-                            System.out.println("*******************************************");
-
+                            System.out.println(auditLogPDU);
 
                             setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
-                                auditLogPDU.getMessage(), auditLogPDU.getAuditTime(), packet.getAddress(), packet.getPort());
+                                auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
 
                         } catch (IOException e) {
-                            setErrorMessage("AuditLogServer",
+                            setErrorMessage("AuditLogServer (UDP)",
                                 "Byte Array konnte nicht in ein AuditLogPDU tranformiert werden.",
                                 8);
                             e.printStackTrace();
                         }
                     } catch (Exception e) {
-                        setErrorMessage("AuditLogServer",
+                        setErrorMessage("AuditLogServer (UDP)",
                             "Beim Empfangen eines PDUs ist ein Fehler aufgetreten.",
                             9);
                         e.printStackTrace();
                     }
                 }
+
+                socket.close();
+
                 return null;
             }
         };
@@ -136,13 +133,11 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     }
 
     @Override
-    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime,
-                               InetAddress address, int port) {
+    public void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime) {
 	    Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 String data = "[TIME] " + new Timestamp(auditLogTime)
-                         + " | [SERVER ] " + address + "/" + port
                          + " | [USER] " + user
                          + " | [TYPE] " + type
                          + " | [MESSAGE] " + message + "\n";
@@ -161,10 +156,10 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     public void writeDataToLogFile(String data) {
         String path = System.getProperty("user.dir");
         String fileName = auditLogFile;
-        String dirName = "/out/LogFiles/";
+        String dirName = "/out/UDP-LogFiles/";
         File file = new File(path + dirName + "/" + fileName);
         File dir = new File(path + dirName);
-        //Path path = Paths.get(System.getProperty("user.dir") + "/out/LogFiles/" + auditLogFile);
+
         if (!file.exists()) {
             try {
                 if (!dir.exists()){
@@ -173,17 +168,17 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                 file.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
-                setErrorMessage("AuditLogServer",
-                    "Ordner ./out/LogFiles/" + auditLogFile + "konnte nicht angelegt werden.", 99);
+                setErrorMessage("AuditLogServer (UDP)",
+                    "Ordner ./out/UDP-LogFiles/" + auditLogFile + "konnte nicht angelegt werden.", 99);
             }
         }
 
         try {
-            Files.write(Paths.get(System.getProperty("user.dir") + "/out/LogFiles/"
+            Files.write(Paths.get(System.getProperty("user.dir") + "/out/UDP-LogFiles/"
                 + auditLogFile), data.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
-            setErrorMessage("AuditLogServer",
+            setErrorMessage("AuditLogServer (UDP)",
                 "Ein Fehler beim Schreiben in das Log-File ist aufgetreten.", 98);
         }
     }
