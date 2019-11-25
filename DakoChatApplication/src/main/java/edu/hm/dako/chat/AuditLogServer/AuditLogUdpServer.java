@@ -108,11 +108,11 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     public void stop(){
         try {
             stage.hide();
-            String message = "AuditLogServerGUI beendet, Gesendete AuditLog-Saetze: " + counter;
+            String message = "AuditLogServerGUI (UDP) beendet, Gesendete AuditLog-Saetze: " + counter;
             System.out.println(message);
             writeDataToLogFile(message);
         } catch (Exception e) {
-            System.out.println("Fehler beim Schliessen der AuditLogServerGUI");
+            System.out.println("Fehler beim Schliessen der AuditLogServerGUI (UDP)");
         }
     }
 

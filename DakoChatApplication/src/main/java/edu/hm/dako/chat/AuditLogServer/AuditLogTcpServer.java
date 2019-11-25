@@ -105,6 +105,18 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
     }
 
     @Override
+    public void stop(){
+        try {
+            stage.hide();
+            String message = "AuditLogServerGUI (TCP) beendet, Gesendete AuditLog-Saetze: " + counter;
+            System.out.println(message);
+            writeDataToLogFile(message);
+        } catch (Exception e) {
+            System.out.println("Fehler beim Schliessen der AuditLogServerGUI (TCP)");
+        }
+    }
+
+    @Override
     public void setErrorMessage(String sender, String errorMessage, long errorCode) {
         log.debug("errorMessage: " + errorMessage);
         Platform.runLater(new Runnable() {
