@@ -2,6 +2,7 @@ package edu.hm.dako.chat.AuditLogServer;
 
 import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.common.AuditLogPduType;
+import edu.hm.dako.chat.connection.Connection;
 import edu.hm.dako.chat.udp.UdpServerConnection;
 import edu.hm.dako.chat.udp.UdpServerSocket;
 import javafx.application.Application;
@@ -16,9 +17,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.*;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -30,12 +28,13 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     private Stage stage;
     private AuditLogGUIController lc;
     private AuditLogModel model = new AuditLogModel();
+	static final String auditLogFile = "ChatAuditLog.dat";
+    private Connection socket;
 
 	static final int AUDIT_LOG_SERVER_PORT = 40001;
 	static final int DEFAULT_SENDBUFFER_SIZE = 30000;
 	static final int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
-
-	static final String auditLogFile = new String("ChatAuditLog.dat");
+    private UdpServerSocket udpServerSocket;
 	protected long counter = 0;
 
     @Override
@@ -46,43 +45,35 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
 
         FXMLLoader loader = new FXMLLoader(AuditLogGUIController.class.getResource("AuditLogGUI.fxml"));
         Parent root = loader.load();
-        AuditLogGUIController lc = loader.getController();
+        lc = loader.getController();
         lc.setAppController(this);
         primaryStage.setTitle("AuditLogServerGUI (UDP)");
         root.setStyle("-fx-background-color: cornsilk");
-        primaryStage.setOpacity(0.7);
+        primaryStage.setOpacity(0.8);
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 800, 400));
         stage = primaryStage;
         primaryStage.show();
 
+        getModel().messages.add("AuditLogServer für TCP Kommunikation gestartet. Nachrichten werden geloggt:");
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
 
-                DatagramSocket socket = new DatagramSocket(AUDIT_LOG_SERVER_PORT);
+                udpServerSocket =
+                    new UdpServerSocket(AUDIT_LOG_SERVER_PORT, DEFAULT_SENDBUFFER_SIZE, DEFAULT_RECEIVEBUFFER_SIZE);
 
-                while (!Thread.currentThread().isInterrupted() && !socket.isClosed()) {
+                while (!udpServerSocket.isClosed()) {
                     try {
-                        byte[] receive = new byte[64000];
+                        socket = udpServerSocket.accept();
 
-                        DatagramPacket packet = new DatagramPacket(receive, receive.length);
-                        socket.receive(packet);
-                        ByteArrayInputStream bis = new ByteArrayInputStream(packet.getData());
-
-                        try (ObjectInput in = new ObjectInputStream(bis)) {
-                            AuditLogPDU auditLogPDU = (AuditLogPDU) in.readObject();
+                        while (!Thread.currentThread().isInterrupted()) {
+                            AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
                             counter++;
                             System.out.println(auditLogPDU);
-
                             setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
                                 auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
-
-                        } catch (IOException e) {
-                            setErrorMessage("AuditLogServer (UDP)",
-                                "Byte Array konnte nicht in ein AuditLogPDU tranformiert werden.",
-                                8);
-                            e.printStackTrace();
                         }
                     } catch (Exception e) {
                         setErrorMessage("AuditLogServer (UDP)",
@@ -91,8 +82,6 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                         e.printStackTrace();
                     }
                 }
-
-                socket.close();
 
                 return null;
             }
@@ -108,7 +97,7 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     public void stop(){
         try {
             stage.hide();
-            String message = "AuditLogServerGUI (UDP) beendet, Gesendete AuditLog-Saetze: " + counter;
+            String message = "AuditLogServerGUI (UDP) beendet, Gesendete AuditLog-Saetze: " + counter + "\n";
             System.out.println(message);
             writeDataToLogFile(message);
         } catch (Exception e) {
@@ -169,7 +158,8 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
             } catch (Exception e) {
                 e.printStackTrace();
                 setErrorMessage("AuditLogServer (UDP)",
-                    "Ordner ./out/UDP-LogFiles/" + auditLogFile + "konnte nicht angelegt werden.", 99);
+                    "Ordner ./out/UDP-LogFiles/" + auditLogFile
+                        + "konnte nicht angelegt werden.", 99);
             }
         }
 
