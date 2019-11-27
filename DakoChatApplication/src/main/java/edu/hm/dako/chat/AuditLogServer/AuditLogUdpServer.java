@@ -30,6 +30,7 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
     private AuditLogModel model = new AuditLogModel();
 	static final String auditLogFile = "ChatAuditLog.dat";
     private Connection socket;
+    private boolean finished = true;
 
 	static final int AUDIT_LOG_SERVER_PORT = 40001;
 	static final int DEFAULT_SENDBUFFER_SIZE = 30000;
@@ -68,12 +69,17 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                     try {
                         socket = udpServerSocket.accept();
 
-                        while (!Thread.currentThread().isInterrupted()) {
-                            AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
-                            counter++;
-                            System.out.println(auditLogPDU);
-                            setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
-                                auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
+                        while (!Thread.currentThread().isInterrupted() && finished) {
+
+                            try {
+                                AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
+                                counter++;
+                                System.out.println(auditLogPDU);
+                                setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
+                                    auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
+                            } catch (IOException e) {
+                                finished = false;
+                            }
                         }
                     } catch (Exception e) {
                         setErrorMessage("AuditLogServer (UDP)",
@@ -82,7 +88,8 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
                         e.printStackTrace();
                     }
                 }
-
+                socket.close();
+                udpServerSocket.close();
                 return null;
             }
         };
@@ -100,6 +107,7 @@ public class AuditLogUdpServer extends Application implements AuditLogServerInte
             String message = "AuditLogServerGUI (UDP) beendet, Gesendete AuditLog-Saetze: " + counter + "\n";
             System.out.println(message);
             writeDataToLogFile(message);
+
         } catch (Exception e) {
             System.out.println("Fehler beim Schliessen der AuditLogServerGUI (UDP)");
         }

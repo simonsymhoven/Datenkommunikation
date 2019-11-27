@@ -39,7 +39,7 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
     private AuditLogModel model = new AuditLogModel();
 	static final String auditLogFile = "ChatAuditLog.dat";
     private Connection socket;
-
+    private boolean finished = true;
 	static final int DEFAULT_SENDBUFFER_SIZE = 30000;
 	static final int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
     private TcpServerSocket tcpServerSocket;
@@ -78,20 +78,27 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
 
                         socket = tcpServerSocket.accept();
 
-                        while (!Thread.currentThread().isInterrupted()) {
-                            AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
-                            counter++;
-                            System.out.println(auditLogPDU);
-                            setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
-                                auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
+                        while (!Thread.currentThread().isInterrupted() && finished) {
+                            try {
+                                AuditLogPDU auditLogPDU = (AuditLogPDU) socket.receive();
+                                counter++;
+                                System.out.println(auditLogPDU);
+                                setMessageLine(auditLogPDU.getUserName(), auditLogPDU.getPduType(),
+                                    auditLogPDU.getMessage(), auditLogPDU.getAuditTime());
+                            } catch (IOException e) {
+                                finished = true;
+                            }
                         }
-                    } catch (Exception e) {
+                    }  catch (Exception e) {
                         setErrorMessage("AuditLogServer (TCP)",
                             "Beim Empfangen eines PDUs ist ein Fehler aufgetreten.",
                             9);
                         e.printStackTrace();
                     }
+
                 }
+                socket.close();
+                tcpServerSocket.close();
                 return null;
             }
         };
@@ -109,6 +116,7 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
             String message = "AuditLogServerGUI (TCP) beendet, Gesendete AuditLog-Saetze: " + counter + "\n";
             System.out.println(message);
             writeDataToLogFile(message);
+
         } catch (Exception e) {
             System.out.println("Fehler beim Schliessen der AuditLogServerGUI (TCP)");
         }
