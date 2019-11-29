@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ChatServerGUI (Mac)" type="Application" factoryName="Application">
+  <configuration default="false" name="ChatServerGUI (Mac)" type="Application" factoryName="Application" folderName="ChatServer" singleton="false">
     <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.server.ChatServerGUI" />
     <module name="DakoChatApplication" />
     <option name="VM_PARAMETERS" value="--module-path $ProjectFileDir$/lib/javafx-sdk-13/lib_mac --add-modules=javafx.controls,javafx.fxml" />
