@@ -1,8 +1,20 @@
 package edu.hm.dako.chat.AuditLogServer;
 
 import edu.hm.dako.chat.common.AuditLogPduType;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public interface AuditLogServerInterface {
+    /**
+     * @see Application#start(javafx.stage.Stage)
+     */
+    void start(Stage primaryStage) throws Exception;
+
+    /**
+     * @see Application#stop()
+     */
+    void stop() throws Exception;
+
     /**
      * Uebergabe einer Fehlermeldung
      *
