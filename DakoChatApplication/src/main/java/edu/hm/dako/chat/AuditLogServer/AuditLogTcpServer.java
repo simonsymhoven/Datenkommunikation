@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -28,26 +28,23 @@ import java.sql.Timestamp;
  * Implementierung auf Basis von TCP.
  *
  * @author mandl
- *
  */
 public class AuditLogTcpServer extends Application implements AuditLogServerInterface {
-	private static Logger log = Logger.getLogger(AuditLogTcpServer.class);
-
-	static final int AUDIT_LOG_SERVER_PORT = 40001;
+    static final String auditLogFile = "ChatAuditLog.dat";
+    static final int AUDIT_LOG_SERVER_PORT = 40001;
+    static final int DEFAULT_SENDBUFFER_SIZE = 30000;
+    static final int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
+    private static Logger log = Logger.getLogger(AuditLogTcpServer.class);
+    protected long counter = 0;
     private Stage stage;
     private AuditLogGUIController lc;
     private AuditLogModel model = new AuditLogModel();
-	static final String auditLogFile = "ChatAuditLog.dat";
     private Connection socket;
     private boolean finished = true;
-	static final int DEFAULT_SENDBUFFER_SIZE = 30000;
-	static final int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
     private TcpServerSocket tcpServerSocket;
 
-	protected long counter = 0;
-
-	@Override
-    public void start (Stage primaryStage) throws Exception {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         PropertyConfigurator.configureAndWatch("log4j.auditLogServer_tcp.properties", 60 * 1000);
         System.out.println("AuditLog-TcpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
         log.info("AuditLog-TcpServer gestartet, Port: " + AUDIT_LOG_SERVER_PORT);
@@ -89,7 +86,7 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
                                 finished = true;
                             }
                         }
-                    }  catch (Exception e) {
+                    } catch (Exception e) {
                         setErrorMessage("AuditLogServer (TCP)",
                             "Beim Empfangen eines PDUs ist ein Fehler aufgetreten.",
                             9);
@@ -106,11 +103,10 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
         Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
-
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         try {
             stage.hide();
             String message = "AuditLogServerGUI (TCP) beendet, Gesendete AuditLog-Saetze: " + counter + "\n";
@@ -162,7 +158,7 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
 
         if (!file.exists()) {
             try {
-                if (!dir.exists()){
+                if (!dir.exists()) {
                     dir.mkdir();
                 }
                 file.createNewFile();
@@ -181,10 +177,9 @@ public class AuditLogTcpServer extends Application implements AuditLogServerInte
             setErrorMessage("AuditLogServer (TCP)",
                 "Ein Fehler beim Schreiben in das Log-File ist aufgetreten.", 98);
         }
-	}
+    }
 
     public AuditLogModel getModel() {
         return model;
     }
 }
-

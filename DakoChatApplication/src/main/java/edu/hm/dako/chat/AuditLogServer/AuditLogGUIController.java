@@ -1,27 +1,25 @@
 package edu.hm.dako.chat.AuditLogServer;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class AuditLogGUIController {
 
+    public static Stage primaryStage;
+    final Label label = new Label();
     @FXML
     public ScrollPane sp;
     public ListView lv;
     public Label headerLabel;
-
-    public static Stage primaryStage;
     private AuditLogUdpServer appController;
     private AuditLogTcpServer appControllerTCP;
-    final Label label = new Label();
+
     /**
      * Setzt den App-Controller
+     *
      * @param appController
      */
     public void setAppController(AuditLogUdpServer appController) {
