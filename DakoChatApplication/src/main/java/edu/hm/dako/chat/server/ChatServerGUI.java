@@ -1,25 +1,16 @@
 package edu.hm.dako.chat.server;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import edu.hm.dako.chat.AuditLogServer.AuditLogGUIController;
+import edu.hm.dako.chat.AuditLogServer.AuditLogServerInterface;
+import edu.hm.dako.chat.AuditLogServer.AuditLogTcpServer;
 import edu.hm.dako.chat.AuditLogServer.AuditLogUdpServer;
 import edu.hm.dako.chat.common.AuditLogImplementationType;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
-import javafx.stage.WindowEvent;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.PropertyConfigurator;
-
 import edu.hm.dako.chat.common.ExceptionHandler;
 import edu.hm.dako.chat.common.ImplementationType;
 import edu.hm.dako.chat.common.SystemConstants;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,12 +19,21 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.PropertyConfigurator;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Benutzeroberflaeche zum Starten des Chat-Servers
@@ -62,6 +62,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 	// Interface der Chat-Server-Implementierung
 	private static ChatServerInterface chatServer;
+	private static AuditLogServerInterface auditLogServer;
 
 	// Server-Startzeit als String
 	private String startTimeAsString;
@@ -99,8 +100,10 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 	private Label auditLogServerPortLabel;
 	private Label auditLogActivate;
 	private Label auditLogConnectionType;
+    private Label auditLogStart;
 
 	private CheckBox enableAuditLogServerCheckbox;
+	private CheckBox startAuditLogServerCheckbox;
 
 	private Button startButton;
 	private Button stopButton;
@@ -139,13 +142,14 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 	public void start(final Stage stage) throws Exception {
 
 		stage.setTitle("ChatServerGUI");
-		stage.setScene(new Scene(pane, 415, 465));
+		stage.setScene(new Scene(pane, 415, 490));
 		stage.show();
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				try {
 					ChatServerGUI.chatServer.stop();
+					ChatServerGUI.auditLogServer.stop();
 				} catch (Exception ex) {
 					ChatServerGUI.log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(ex);
@@ -190,6 +194,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 		auditLogServerPortLabel = createLabel("AuditLogServer Port");
 		auditLogActivate = createLabel("AuditLog aktivieren");
 		auditLogConnectionType = createLabel("AuditLog-Server Verbindungstyp");
+		auditLogStart = createLabel("AuditLogServer starten");
 
 		inputPane.setPadding(new Insets(5, 5, 5, 5));
 		inputPane.setVgap(1);
@@ -225,6 +230,8 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 				}
 			}
 		});
+		startAuditLogServerCheckbox = new CheckBox();
+		startAuditLogServerCheckbox.setSelected(false);
 
 		inputPane.add(label, 1, 3);
 		inputPane.add(comboBoxImplType, 3, 3);
@@ -238,10 +245,12 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 		inputPane.add(auditLogServerPort, 3, 11);
 		inputPane.add(auditLogConnectionType, 1, 13);
 		inputPane.add(comboBoxAuditLogServerType, 3, 13);
-		inputPane.add(sendBufferSizeLabel, 1, 15);
-		inputPane.add(sendBufferSize, 3, 15);
-		inputPane.add(receiveBufferSizeLabel, 1, 17);
-		inputPane.add(receiveBufferSize, 3, 17);
+		inputPane.add(auditLogStart, 1, 15);
+		inputPane.add(startAuditLogServerCheckbox, 3, 15);
+		inputPane.add(sendBufferSizeLabel, 1, 17);
+		inputPane.add(sendBufferSize, 3, 17);
+		inputPane.add(receiveBufferSizeLabel, 1, 19);
+		inputPane.add(receiveBufferSize, 3, 19);
 
 		return inputPane;
 	}
@@ -418,18 +427,32 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 						int auditLogServerPort = readAuditLogServerPort();
 						String auditLogServerImplType = readAuditLogComboBox();
 
-						try {
-						    startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
-									auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
-                            try {
-                                new AuditLogUdpServer().start(new Stage());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                setAlert(
-                                    "Der AuditLogServer konnte nicht gestartet werden. Ein Fehler ist aufgetreten.");
-                                return;
+                        try {
+                            if (startAuditLogServerCheckbox.isSelected()){
+                                if (auditLogServer != null) {
+                                    auditLogServer.stop();
+                                }else {
+                                    synchronized (this) {
+                                        if (readAuditLogComboBox().equals(SystemConstants.AUDIT_LOG_SERVER_UDP_IMPL)) {
+                                            auditLogServer = new AuditLogUdpServer();
+                                        } else {
+                                            auditLogServer = new AuditLogTcpServer();
+                                        }
+                                    }
+                                }
+                                auditLogServer.start(new Stage());
                             }
-						} catch (Exception e) {
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            setAlert(
+                                "Der AuditLogServer konnte nicht gestartet werden. Ein Fehler ist aufgetreten.");
+                            return;
+                        }
+
+                        try {
+                            startChatServerWithAuditLogServer(implType, serverPort, sendBufferSize, receiveBufferSize,
+                                auditLogServerHostname, auditLogServerPort, auditLogServerImplType);
+                        } catch (Exception e) {
 							setAlert(
 									"Der Server konnte nicht gestartet werden oder die Verbindung zum AuditLogServer konnte " +
 											"nicht hergestellt werden, evtl. laeuft ein anderer Server mit dem Port");
@@ -471,7 +494,9 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 
 				try {
 					chatServer.stop();
-                    AuditLogGUIController.stop();
+                    if (auditLogServer != null) {
+                        auditLogServer.stop();
+                    }
 				} catch (Exception e) {
 					log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(e);
@@ -501,6 +526,7 @@ public class ChatServerGUI extends Application implements ChatServerGuiInterface
 			public void handle(ActionEvent event) {
 				try {
 					ChatServerGUI.chatServer.stop();
+                    ChatServerGUI.auditLogServer.stop();
 				} catch (Exception var3) {
 					ChatServerGUI.log.error("Fehler beim Stoppen des Chat-Servers");
 					ExceptionHandler.logException(var3);

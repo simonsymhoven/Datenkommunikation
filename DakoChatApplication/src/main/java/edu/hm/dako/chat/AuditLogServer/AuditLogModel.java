@@ -5,4 +5,5 @@ import javafx.collections.ObservableList;
 
 public class AuditLogModel {
     public ObservableList<String> messages = FXCollections.observableArrayList();
+    public String serverAddress;
 }

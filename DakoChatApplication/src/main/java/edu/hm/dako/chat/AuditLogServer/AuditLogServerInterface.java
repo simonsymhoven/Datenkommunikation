@@ -1,40 +1,45 @@
 package edu.hm.dako.chat.AuditLogServer;
 
 import edu.hm.dako.chat.common.AuditLogPduType;
-import javafx.application.Platform;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public interface AuditLogServerInterface {
     /**
+     * @see Application#start(javafx.stage.Stage)
+     */
+    void start(Stage primaryStage) throws Exception;
+
+    /**
+     * @see Application#stop()
+     */
+    void stop() throws Exception;
+
+    /**
      * Uebergabe einer Fehlermeldung
      *
-     * @param sender
-     *          Absender der Fehlermeldung
-     * @param errorMessage
-     *          Fehlernachricht
-     * @param errorCode
-     *          Error Code
+     * @param sender       Absender der Fehlermeldung
+     * @param errorMessage Fehlernachricht
+     * @param errorCode    Error Code
      */
 
-    public void setErrorMessage(String sender, String errorMessage, long errorCode);
+    void setErrorMessage(String sender, String errorMessage, long errorCode);
 
 
     /**
      * Uebergabe einer Nachricht zur Ausgabe in der Messagezeile
      *
-     * @param user
-     *          Absender der Nachricht
-     * @param type
-     *          Typ der Nachricht
-     * @param message
-     *          Nachrichtentext
+     * @param user    Absender der Nachricht
+     * @param type    Typ der Nachricht
+     * @param message Nachrichtentext
      */
-    public void setMessageLine(String user, AuditLogPduType type, String message);
+    void setMessageLine(String user, AuditLogPduType type, String message, Long auditLogTime);
 
 
     /**
      * Schreibt Daten ins Log-File
-     * @param data
-     *          Nachricht die ins Logfile geschrieben werden soll
+     *
+     * @param data Nachricht die ins Logfile geschrieben werden soll
      */
-    public void writeDataToLogFile(String data);
+    void writeDataToLogFile(String data);
 }
