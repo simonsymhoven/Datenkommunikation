@@ -1,5 +1,6 @@
 package edu.hm.dako.chat.audit_log_server;
 
+import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.connection.ServerSocketInterface;
 import edu.hm.dako.chat.udp.UdpServerSocket;
 import org.apache.log4j.PropertyConfigurator;
@@ -15,7 +16,7 @@ public class UdpServer extends AbstractServer {
         super(serverPort);
     }
 
-    public UdpServer(int serverPort, AuditLogModelInterface model) {
+    public UdpServer(int serverPort, AuditLogPduDaoInterface<AuditLogPDU> model) {
         super(serverPort, model);
     }
 

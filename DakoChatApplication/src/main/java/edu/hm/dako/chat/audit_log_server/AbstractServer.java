@@ -1,5 +1,6 @@
 package edu.hm.dako.chat.audit_log_server;
 
+import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.common.ExceptionHandler;
 import edu.hm.dako.chat.connection.ServerSocketInterface;
 import org.apache.log4j.Logger;
@@ -27,7 +28,7 @@ public abstract class AbstractServer implements ServerInterface {
     final int serverPort;
 
     private ConnectionWorkerThread connectionWorker;
-    private AuditLogModelInterface model;
+    private AuditLogPduDaoInterface<AuditLogPDU> model;
 
     AbstractServer() {
         this(AbstractServer.AUDIT_LOG_SERVER_PORT);
@@ -38,7 +39,7 @@ public abstract class AbstractServer implements ServerInterface {
         initLogger();
     }
 
-    AbstractServer(int serverPort, AuditLogModelInterface model) {
+    AbstractServer(int serverPort, AuditLogPduDaoInterface<AuditLogPDU> model) {
         this(serverPort);
         this.model = model;
     }
@@ -94,13 +95,13 @@ public abstract class AbstractServer implements ServerInterface {
     }
 
     /**
-     * Creates a new {@link AuditLogModelInterface} instance, if {@code model} is <code>null</code>.
+     * Creates a new {@link AuditLogPduDaoInterface} instance, if {@code model} is <code>null</code>.
      *
-     * @return a instance of {@link AuditLogModelInterface}.
+     * @return a instance of {@link AuditLogPduDaoInterface}.
      */
-    private synchronized AuditLogModelInterface getModel() {
+    private synchronized AuditLogPduDaoInterface<AuditLogPDU> getModel() {
         if (model == null) {
-            model = new AuditLogModel();
+            model = new AuditLogPduDao();
         }
 
         return model;

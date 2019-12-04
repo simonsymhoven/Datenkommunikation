@@ -1,5 +1,6 @@
 package edu.hm.dako.chat.audit_log_server;
 
+import edu.hm.dako.chat.common.AuditLogPDU;
 import edu.hm.dako.chat.connection.ServerSocketInterface;
 import edu.hm.dako.chat.tcp.TcpServerSocket;
 import org.apache.log4j.PropertyConfigurator;
@@ -15,7 +16,7 @@ public class TcpServer extends AbstractServer {
         super(serverPort);
     }
 
-    public TcpServer(int serverPort, AuditLogModelInterface model) {
+    public TcpServer(int serverPort, AuditLogPduDaoInterface<AuditLogPDU> model) {
         super(serverPort, model);
     }
 
@@ -25,7 +26,7 @@ public class TcpServer extends AbstractServer {
             server = new TcpServer();
         } else {
             String arg = args[0];
-            server = new TcpServer(Integer.parseInt(arg), new AuditLogGuiModel());
+            server = new TcpServer(Integer.parseInt(arg));
         }
         server.start(true);
     }

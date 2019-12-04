@@ -12,17 +12,17 @@ import java.net.SocketException;
 
 public class ConnectionWorkerThread extends Thread {
     private static final Logger log = Logger.getLogger(ConnectionWorkerThread.class);
-    private final AuditLogModelInterface model;
+    private final AuditLogPduDaoInterface<AuditLogPDU> model;
     private final ServerSocketInterface socket;
     /**
-     * If an exception is thrown while {@link #handleIncomingMessage()},
-     * this flag is set to terminate and close the {@link #socket} connection.
+     * If an exception is thrown while {@link ConnectionWorkerThread#handleIncomingMessage()},
+     * this flag is set to terminate and close the {@link ConnectionWorkerThread#socket} connection.
      */
     private boolean finished = false;
 
     private Connection connection;
 
-    public ConnectionWorkerThread(ServerSocketInterface socket, AuditLogModelInterface model) {
+    public ConnectionWorkerThread(ServerSocketInterface socket, AuditLogPduDaoInterface<AuditLogPDU> model) {
         this.socket = socket;
         this.model = model;
         setDaemon(true);
@@ -54,14 +54,14 @@ public class ConnectionWorkerThread extends Thread {
     }
 
     /**
-     * Waits for the next message from the client and puts it in the {@link AuditLogModelInterface} {@link #model}.
-     * If a connection related exception is thrown, the {@link #finished} flag is set to terminate the connection.
+     * Waits for the next message from the client and puts it in the {@link AuditLogPduDaoInterface} {@link ConnectionWorkerThread#model}.
+     * If a connection related exception is thrown, the {@link ConnectionWorkerThread#finished} flag is set to terminate the connection.
      */
     private void handleIncomingMessage() {
         try {
             AuditLogPDU receivedPdu = (AuditLogPDU) connection.receive();
             log.debug(receivedPdu);
-            model.addMessage(receivedPdu);
+            model.save(receivedPdu);
 
         } catch (EndOfFileException e) {
             log.debug("End of File beim Empfang, vermutlich Verbindungsabbau des Partners");
