@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="UdpServer" type="Application" factoryName="Application" folderName="AuditLogServerNew" singleton="false" nameIsGenerated="true">
+  <configuration default="false" name="UdpServer" type="Application" factoryName="Application" folderName="audit_log_server" singleton="false" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.audit_log_server.UdpServer" />
     <module name="DakoChatApplication" />
     <extension name="coverage">
