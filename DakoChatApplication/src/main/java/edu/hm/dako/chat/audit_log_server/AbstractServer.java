@@ -76,7 +76,7 @@ public abstract class AbstractServer implements ServerInterface {
             log.error("Socket konnte nicht initialisiert werden");
             ExceptionHandler.logException(e);
         } catch (InterruptedException e) {
-            connectionWorker.interrupt();
+            Thread.currentThread().interrupt();
             log.error("ConnectionWorkerThread wurde unterbrochen");
             ExceptionHandler.logException(e);
         }
