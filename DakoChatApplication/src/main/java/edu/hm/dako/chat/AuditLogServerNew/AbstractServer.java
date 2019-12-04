@@ -11,7 +11,7 @@ public abstract class AbstractServer implements ServerInterface {
     static final Logger log = Logger.getLogger(AbstractServer.class);
 
     final int serverPort;
-    ServerSocketInterface serverSocket;
+    static ServerSocketInterface serverSocket;
 
     private ConnectionWorkerThread connectionWorker;
     private AuditLogModelInterface model;
@@ -85,7 +85,7 @@ public abstract class AbstractServer implements ServerInterface {
      *
      * @return a instance of {@link AuditLogModelInterface}.
      */
-    private AuditLogModelInterface getModel() {
+    private synchronized AuditLogModelInterface getModel() {
         if (model == null) {
             model = new AuditLogModel();
         }

@@ -35,14 +35,14 @@ public class TcpServer extends AbstractServer {
      */
     @Override
     void initLogger() {
-        PropertyConfigurator.configureAndWatch("log4j.auditLogServer_tcp.properties", 60 * 1000);
+        PropertyConfigurator.configureAndWatch("log4j.auditLogServer_tcp.properties");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    ServerSocketInterface getServerSocket() throws IOException {
+    synchronized ServerSocketInterface getServerSocket() throws IOException {
         if (serverSocket == null) {
             serverSocket = new TcpServerSocket(
                 serverPort,

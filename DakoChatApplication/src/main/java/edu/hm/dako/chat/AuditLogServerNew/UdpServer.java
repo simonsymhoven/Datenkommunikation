@@ -35,14 +35,14 @@ public class UdpServer extends AbstractServer {
      */
     @Override
     void initLogger() {
-        PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties", 60 * 1000);
+        PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    ServerSocketInterface getServerSocket() throws IOException {
+    synchronized ServerSocketInterface getServerSocket() throws IOException {
         if (serverSocket == null) {
             serverSocket = new UdpServerSocket(
                 serverPort,
