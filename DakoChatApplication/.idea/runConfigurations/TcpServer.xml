@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="TcpServer" type="Application" factoryName="Application" folderName="AuditLogServerNew" singleton="false">
-    <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.AuditLogServerNew.TcpServer" />
+    <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.audit_log_server.TcpServer" />
     <module name="DakoChatApplication" />
     <extension name="coverage">
       <pattern>

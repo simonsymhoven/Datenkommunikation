@@ -1,4 +1,4 @@
-package edu.hm.dako.chat.AuditLogServerNew;
+package edu.hm.dako.chat.audit_log_server;
 
 public interface ServerInterface {
     /**
