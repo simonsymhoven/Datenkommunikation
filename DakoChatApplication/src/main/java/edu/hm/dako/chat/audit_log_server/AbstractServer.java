@@ -28,6 +28,7 @@ public abstract class AbstractServer implements ServerInterface {
     final int serverPort;
 
     private ConnectionWorkerThread connectionWorker;
+    private MessageLoggingWorkerThread messageLogWorker;
     private AuditLogPduDaoInterface<AuditLogPDU> model;
 
     AbstractServer() {
@@ -67,8 +68,14 @@ public abstract class AbstractServer implements ServerInterface {
         try {
             if (connectionWorker == null) {
                 connectionWorker = new ConnectionWorkerThread(getServerSocket(), getModel());
+                connectionWorker.setName("ConnectionWorkerThread");
+            }
+            if (messageLogWorker == null) {
+                messageLogWorker = new MessageLoggingWorkerThread(getModel());
+                messageLogWorker.setName("MessageLoggingWorkerThread");
             }
             connectionWorker.start();
+            messageLogWorker.start();
 
             if (blocking) {
                 connectionWorker.join();
