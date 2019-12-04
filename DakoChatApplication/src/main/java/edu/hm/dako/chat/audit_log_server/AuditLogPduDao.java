@@ -9,11 +9,11 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
     /**
      * List of {@link AuditLogPDU}.
      */
-    private List<AuditLogPDU> pduList;
+    private List<AuditLogPDU> messages;
     /**
      * Counter for recently added {@link AuditLogPDU} since {@link AuditLogPduDao#getAllNew()} got called.
      */
-    private int newPduCounter = 0;
+    private int newMessageCounter = 0;
 
     public AuditLogPduDao() {
         this(new ArrayList<>());
@@ -22,10 +22,10 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
     /**
      * If the default {@link ArrayList} does not meet the requirements, it can be replaced this way.
      *
-     * @param pduList alternative list
+     * @param list alternative list
      */
-    public AuditLogPduDao(List<AuditLogPDU> pduList) {
-        this.pduList = pduList;
+    public AuditLogPduDao(List<AuditLogPDU> list) {
+        this.messages = list;
     }
 
     /**
@@ -33,19 +33,21 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
      */
     @Override
     public synchronized List<AuditLogPDU> getAll() {
-        return pduList;
+        return new ArrayList<>(messages);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public synchronized List<AuditLogPDU> getAllNew() {
-        final int lastIndex = pduList.size() - 1;
-        final List<AuditLogPDU> newPduList = pduList.subList(lastIndex - newPduCounter, lastIndex);
-        newPduCounter = 0;
+    public synchronized List<AuditLogPDU> getAllNew() throws InterruptedException {
+        while (!hasNew()) {
+            wait();
+        }
+        final int fromIndex = messages.size() - newMessageCounter;
+        newMessageCounter = 0;
 
-        return newPduList;
+        return new ArrayList<>(messages).subList(fromIndex, messages.size());
     }
 
     /**
@@ -53,7 +55,15 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
      */
     @Override
     public synchronized boolean hasNew() {
-        return newPduCounter > 0;
+        return newMessageCounter > 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized int getNewMessageCounter() {
+        return newMessageCounter;
     }
 
     /**
@@ -61,8 +71,9 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
      */
     @Override
     public synchronized void save(AuditLogPDU message) {
-        pduList.add(message);
-        newPduCounter++;
+        messages.add(message);
+        newMessageCounter++;
+        notifyAll();
     }
 
     /**
@@ -70,7 +81,7 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
      */
     @Override
     public synchronized AuditLogPDU get(long id) {
-        return pduList.get((int) id);
+        return messages.get((int) id);
     }
 
     /**
@@ -78,6 +89,6 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
      */
     @Override
     public synchronized void delete(AuditLogPDU message) {
-        pduList.remove(message);
+        messages.remove(message);
     }
 }

@@ -4,35 +4,43 @@ import java.util.List;
 
 public interface AuditLogPduDaoInterface<T> {
     /**
-     * @return list of all elements
+     * @return list of all messages
      */
     List<T> getAll();
 
     /**
-     * Resets the new elements counter and returns a list of all recently added elements.
+     * A thread calling this method waits till {@link AuditLogPduDaoInterface#hasNew()} returns {@code true}.
+     * Then, the counter for new messages is reset and a list of all recently added messages is returned.
      *
-     * @return list of elements
+     * @return list of new messages
      */
-    List<T> getAllNew();
+    List<T> getAllNew() throws InterruptedException;
 
     /**
-     * @return {@code true} if new elements counter is greater 0
+     * @return {@code true} if the counter for new messages is greater 0
      */
     boolean hasNew();
 
     /**
-     * @param message element to be appended to this list
+     * @return counter of new messages
+     */
+    int getNewMessageCounter();
+
+    /**
+     * Adds the message to list and notify all in {@link AuditLogPduDaoInterface#getAllNew()} waiting threads.
+     *
+     * @param message to be appended to this list
      */
     void save(T message);
 
     /**
-     * @param id if the element to return
-     * @return the element at the specified position in this list
+     * @param id if the message to return
+     * @return the message at the specified position in this list
      */
     T get(long id);
 
     /**
-     * @param message element to be removed from this list, if present
+     * @param message to be removed from this list, if present
      */
     void delete(T message);
 }
