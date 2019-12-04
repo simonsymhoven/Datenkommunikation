@@ -8,16 +8,29 @@ import org.apache.log4j.PropertyConfigurator;
 import java.io.IOException;
 
 public abstract class AbstractServer implements ServerInterface {
+    /**
+     * Default server port.
+     */
+    static final int AUDIT_LOG_SERVER_PORT = 40001;
+    /**
+     * Default receive buffer size for server port in bytes.
+     */
+    static final int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
+    /**
+     * Default send buffer size for server port in bytes.
+     */
+    static final int DEFAULT_SENDBUFFER_SIZE = 30000;
     static final Logger log = Logger.getLogger(AbstractServer.class);
 
-    final int serverPort;
     static ServerSocketInterface serverSocket;
+
+    final int serverPort;
 
     private ConnectionWorkerThread connectionWorker;
     private AuditLogModelInterface model;
 
     AbstractServer() {
-        this(ServerInterface.AUDIT_LOG_SERVER_PORT);
+        this(AbstractServer.AUDIT_LOG_SERVER_PORT);
     }
 
     AbstractServer(int serverPort) {

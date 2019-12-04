@@ -2,19 +2,6 @@ package edu.hm.dako.chat.audit_log_server;
 
 public interface ServerInterface {
     /**
-     * Default server port.
-     */
-    int AUDIT_LOG_SERVER_PORT = 40001;
-    /**
-     * Default receive buffer size for server port in bytes.
-     */
-    int DEFAULT_RECEIVEBUFFER_SIZE = 800000;
-    /**
-     * Default send buffer size for server port in bytes.
-     */
-    int DEFAULT_SENDBUFFER_SIZE = 30000;
-
-    /**
      * Starts a {@link ConnectionWorkerThread} without blocking.
      */
     void start();

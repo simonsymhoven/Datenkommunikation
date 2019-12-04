@@ -46,8 +46,8 @@ public class UdpServer extends AbstractServer {
         if (serverSocket == null) {
             serverSocket = new UdpServerSocket(
                 serverPort,
-                ServerInterface.DEFAULT_SENDBUFFER_SIZE,
-                ServerInterface.DEFAULT_RECEIVEBUFFER_SIZE
+                AbstractServer.DEFAULT_SENDBUFFER_SIZE,
+                AbstractServer.DEFAULT_RECEIVEBUFFER_SIZE
             );
         }
         log.info("Socket wurde auf Port " + serverPort + " initialisiert");
