@@ -35,7 +35,7 @@ public class UdpServer extends AbstractServer {
      * {@inheritDoc}
      */
     @Override
-    void initLogger() {
+    void initLog4J() {
         PropertyConfigurator.configureAndWatch("log4j.auditLogServer_udp.properties");
     }
 

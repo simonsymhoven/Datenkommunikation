@@ -37,7 +37,7 @@ public abstract class AbstractServer implements ServerInterface {
 
     AbstractServer(int serverPort) {
         this.serverPort = serverPort;
-        initLogger();
+        initLog4J();
     }
 
     AbstractServer(int serverPort, AuditLogPduDaoInterface<AuditLogPDU> model) {
@@ -50,7 +50,7 @@ public abstract class AbstractServer implements ServerInterface {
      *
      * @see PropertyConfigurator
      */
-    abstract void initLogger();
+    abstract void initLog4J();
 
     /**
      * {@inheritDoc}
