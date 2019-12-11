@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TcpServer.jar" type="JarApplication" folderName="Applications" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/TcpServer/TcpServer.jar" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>

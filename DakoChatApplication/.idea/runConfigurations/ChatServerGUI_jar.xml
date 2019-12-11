@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ChatServerGUI.jar" type="JarApplication" folderName="Applications" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/ChatServerGUI/ChatServerGUI.jar" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>
