@@ -63,7 +63,7 @@ public class MessageLoggingWorkerThread extends Thread {
 
     /**
      * If {@link MessageLoggingWorkerThread#csvWriter} is @null, a new {@link BufferedWriter} object is created and
-     * returned. As a result a new CSV file will be created as well.
+     * returned. As a result a new CSV file ({@code audit_log_logFileDate.csv}) will be created as well.
      *
      * @return new or existing {@link MessageLoggingWorkerThread#csvWriter}
      * @throws IOException If an I/O error occurs

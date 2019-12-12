@@ -9,7 +9,7 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
     /**
      * List of {@link AuditLogPDU}.
      */
-    private List<AuditLogPDU> messages;
+    private final List<AuditLogPDU> messages;
     /**
      * Counter for recently added {@link AuditLogPDU} since {@link AuditLogPduDao#getAllNew()} got called.
      */
