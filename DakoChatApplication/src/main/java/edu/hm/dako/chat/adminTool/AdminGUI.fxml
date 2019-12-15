@@ -26,12 +26,15 @@
                <TextField fx:id="txtAnzahlPDUs" editable="false" layoutX="181.0" layoutY="79.0" prefHeight="27.0" prefWidth="255.0" />
                <Label layoutX="31.0" layoutY="6.0" text="Ausgewähltes Log-File:" />
                <TextField fx:id="txtSelectedFile" editable="false" layoutX="181.0" layoutY="1.0" prefHeight="27.0" prefWidth="255.0" />
-               <TableView fx:id="tableView" layoutX="26.0" layoutY="159.0" prefHeight="196.0" prefWidth="550.0">
+               <TableView fx:id="tableView" layoutX="19.0" layoutY="160.0" prefHeight="196.0" prefWidth="550.0">
                   <columns>
-                     <TableColumn fx:id="clientColumn" prefWidth="276.0" text="Client" />
-                     <TableColumn fx:id="pduColumn" prefWidth="273.0" text="Anzahl gesendeter Chat Nachrichten" />
+                     <TableColumn fx:id="clientColumn" prefWidth="98.0" text="Client" />
+                     <TableColumn fx:id="pduColumn" minWidth="0.0" prefWidth="94.0" text="Chat Messages" />
+                     <TableColumn fx:id="loginColumn" prefWidth="128.0" text="Login" />
+                     <TableColumn fx:id="logoutColumn" prefWidth="127.0" text="Logout" />
+                     <TableColumn fx:id="timeColumn" prefWidth="102.0" text="Zeit (HH:mm:ss)" />
                   </columns></TableView>
-               <Label layoutX="26.0" layoutY="131.0" text="Detiallierte Informationen (Anzahl gesendeter Nachrichten enthält nur PDUs mit Typ &quot;Chat&quot;):" />
+               <Label layoutX="26.0" layoutY="131.0" text="Detiallierte Informationen:" />
             </children></AnchorPane>
       </children>
    </HBox>
