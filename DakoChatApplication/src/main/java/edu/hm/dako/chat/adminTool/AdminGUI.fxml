@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" fx:controller="edu.hm.dako.chat.adminTool.AdminGUIController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.hm.dako.chat.adminTool.AdminGUIController">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
@@ -22,18 +22,16 @@
             <children>
                <Label layoutX="76.0" layoutY="46.0" text="Anzahl Clients:" />
                <Label layoutX="85.0" layoutY="84.0" text="Anzahl PDUs:" />
-               <Label layoutX="72.0" layoutY="120.0" text="Server-Session:" />
                <TextField fx:id="txtAnzahlClients" editable="false" layoutX="181.0" layoutY="41.0" prefHeight="27.0" prefWidth="255.0" />
                <TextField fx:id="txtAnzahlPDUs" editable="false" layoutX="181.0" layoutY="79.0" prefHeight="27.0" prefWidth="255.0" />
-               <TextField fx:id="txtServerSession" editable="false" layoutX="181.0" layoutY="115.0" prefHeight="27.0" prefWidth="255.0" />
                <Label layoutX="31.0" layoutY="6.0" text="Ausgewähltes Log-File:" />
                <TextField fx:id="txtSelectedFile" editable="false" layoutX="181.0" layoutY="1.0" prefHeight="27.0" prefWidth="255.0" />
-               <TableView fx:id="tableView" layoutX="24.0" layoutY="209.0" prefHeight="139.0" prefWidth="550.0">
+               <TableView fx:id="tableView" layoutX="26.0" layoutY="159.0" prefHeight="196.0" prefWidth="550.0">
                   <columns>
-                     <TableColumn prefWidth="276.0" text="Client" />
-                     <TableColumn prefWidth="273.0" text="Anzahl gesendeter PDUs" />
+                     <TableColumn fx:id="clientColumn" prefWidth="276.0" text="Client" />
+                     <TableColumn fx:id="pduColumn" prefWidth="273.0" text="Anzahl gesendeter Chat Nachrichten" />
                   </columns></TableView>
-               <Label layoutX="24.0" layoutY="182.0" text="Detiallierte Informationen:" />
+               <Label layoutX="26.0" layoutY="131.0" text="Detiallierte Informationen (Anzahl gesendeter Nachrichten enthält nur PDUs mit Typ &quot;Chat&quot;):" />
             </children></AnchorPane>
       </children>
    </HBox>

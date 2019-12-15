@@ -8,4 +8,20 @@ public class TableItem {
         this.clientName = clientName;
         this.pduCounter = pduCounter;
     }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public Integer getPduCounter() {
+        return pduCounter;
+    }
+
+    public void setPduCounter(Integer pduCounter) {
+        this.pduCounter = pduCounter;
+    }
 }

@@ -1,12 +1,8 @@
 package edu.hm.dako.chat.adminTool;
 
-import edu.hm.dako.chat.AuditLogServer.AuditLogGUIController;
-import edu.hm.dako.chat.common.AuditLogPDU;
-import edu.hm.dako.chat.common.SystemConstants;
+import edu.hm.dako.chat.common.AuditLogPduType;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminGUIController extends Application {
 
@@ -32,11 +30,16 @@ public class AdminGUIController extends Application {
     @FXML
     public TextField txtAnzahlPDUs;
     @FXML
-    public TextField txtServerSession;
-    @FXML
     public TableView tableView;
+    @FXML
+    public TableColumn clientColumn;
+    @FXML
+    public TableColumn pduColumn;
 
-    public String selectedFile;
+    private String selectedFile;
+    private HashMap<String, Integer> userMap;
+    private int pduCounter;
+    public ObservableList<TableItem> data = FXCollections.observableArrayList();
 
     public static void main(String[] args) {
         launch(args);
@@ -55,34 +58,22 @@ public class AdminGUIController extends Application {
     @FXML
     public void initialize(){
         // Initialisiert die TreeView mit allen LogFiles
-        TreeItem<String> rootItem = new TreeItem<> ("Log-Files", new ImageView(
+        TreeItem<String> rootItem = new TreeItem<> ("logs", new ImageView(
             new Image(getClass().getResourceAsStream("resources/folder.png"))));
         rootItem.setExpanded(true);
 
-        TreeItem<String> TCPItem = new TreeItem<> ("TCP-LogFiles", new ImageView(
-            new Image(getClass().getResourceAsStream("resources/folder.png"))));
-        rootItem.getChildren().add(TCPItem);
-        TreeItem<String> UDPItem = new TreeItem<> ("UDP-LogFiles", new ImageView(
-            new Image(getClass().getResourceAsStream("resources/folder.png"))));
-        rootItem.getChildren().add(UDPItem);
-
-        File tcpDir = new File(System.getProperty("user.dir") + "/out/TCP-LogFiles/");
-        File[] tcpFiles = tcpDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".dat"));
+        File tcpDir = new File(System.getProperty("user.dir") + "/logs/");
+        File[] tcpFiles = tcpDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".csv"));
         for (File tcpFile : tcpFiles) {
             TreeItem<String> item = new TreeItem<> (tcpFile.getName(),new ImageView(
                 new Image(getClass().getResourceAsStream("resources/file.png"))));
-            TCPItem.getChildren().add(item);
-        }
-
-        File udpDir = new File(System.getProperty("user.dir") + "/out/TCP-LogFiles/");
-        File[] udpFiles = udpDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".dat"));
-        for (File udpFile : udpFiles) {
-            TreeItem<String> item = new TreeItem<> (udpFile.getName(),new ImageView(
-                new Image(getClass().getResourceAsStream("resources/file.png"))));
-            UDPItem.getChildren().add(item);
+            rootItem.getChildren().add(item);
         }
 
         treeView.setRoot(rootItem);
+
+        clientColumn.setCellValueFactory(new PropertyValueFactory("clientName"));
+        pduColumn.setCellValueFactory(new PropertyValueFactory("pduCounter"));
     }
 
     @FXML
@@ -90,7 +81,7 @@ public class AdminGUIController extends Application {
         TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
 
         ProgressStage ps = new ProgressStage();
-        if (selectedItem.getValue().contains(".dat")) {
+        if (selectedItem.getValue().contains(".csv")) {
 
             // Thread für Progress Indicator
             Runnable progressTask = new Runnable() {
@@ -117,6 +108,11 @@ public class AdminGUIController extends Application {
                         ps.stopProgress();
                         if (returnValue == 200) {
                             txtSelectedFile.setText(selectedFile);
+                            txtAnzahlClients.setText(String.valueOf(userMap.size()));
+                            // -1 because of csv header
+                            txtAnzahlPDUs.setText(String.valueOf(pduCounter-1));
+                            tableView.setItems(data);
+
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Es ist ein Fehler aufgetreten!");
@@ -137,20 +133,56 @@ public class AdminGUIController extends Application {
 
 
     public int analyse(TreeItem<String> selectedItem){
-        String path = "/out/" + selectedItem.getParent().getValue() + "/" + selectedItem.getValue();
+        String path = "/" + selectedItem.getParent().getValue() + "/" + selectedItem.getValue();
         selectedFile = path;
+
+        String line = "";
+        String cvsSplitBy = ";";
+        userMap = new HashMap<>();
+        pduCounter = 0;
+
         try {
             FileReader fr = new FileReader(System.getProperty("user.dir") + path);
             BufferedReader br = new BufferedReader(fr);
-            // TODO: Analyse des Log-Files
+
+            while ((line = br.readLine()) != null) {
+
+                String[] pdu = line.split(cvsSplitBy);
+
+                if (pdu[0].equals(AuditLogPduType.LOGIN_REQUEST.getDescription())) {
+                    if (!userMap.containsKey(pdu[3])) {
+                        userMap.put(pdu[3], 0);
+                    }
+                } else {
+                    if (pdu[0].equals(AuditLogPduType.CHAT_MESSAGE_REQUEST.getDescription())) {
+                        userMap.put(pdu[3],  userMap.get(pdu[3]) + 1);
+                    }
+                }
+                pduCounter++;
+            }
+
+            for (Map.Entry<String, Integer> entry : userMap.entrySet()) {
+               data.add(new TableItem(entry.getKey(), entry.getValue()));
+            }
+
             br.close();
             return 200;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            setErrorMessage("AdminGUIController", "Bei der Analayse ist ein Fehler aufgetreten. " +
+                "Bitte Vorgang wiederholen", 90);
             e.printStackTrace();
         }
         return 400;
+    }
+
+    public void setErrorMessage(String sender, String errorMessage, long errorCode) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Es ist ein Fehler im " + sender + " aufgetreten");
+            alert.setHeaderText("Fehlerbehandlung (Fehlercode = " + errorCode + ")");
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+        });
     }
 
 
