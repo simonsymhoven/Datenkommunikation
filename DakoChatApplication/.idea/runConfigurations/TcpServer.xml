@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TcpServer" type="Application" factoryName="Application" folderName="audit_log_server" singleton="false">
+    <option name="MAIN_CLASS_NAME" value="edu.hm.dako.chat.audit_log_server.TcpServer" />
+    <module name="DakoChatApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="edu.hm.dako.chat.AuditLogServerOld.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
