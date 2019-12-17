@@ -15,12 +15,12 @@ public class ProgressStage {
     /**
      * default Stage
      */
-    final static Stage stageForProgressIndicator = new Stage();
+    static final Stage stageForProgressIndicator = new Stage();
 
     /**
      * default progressIndicator
      */
-    final static ProgressIndicator progressIndicator = new ProgressIndicator(-1);
+    static final ProgressIndicator progressIndicator = new ProgressIndicator(-1);
 
     /**
      * starts the load animation in a new stage with a infinity progressbar

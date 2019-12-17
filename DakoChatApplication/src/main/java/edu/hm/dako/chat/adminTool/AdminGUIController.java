@@ -25,7 +25,7 @@ import java.util.Map;
 public class AdminGUIController extends Application {
 
     @FXML
-    public TreeView<String> treeView;
+    private TreeView<String> treeView;
     public TextField txtSelectedFile;
     public TextField txtClientsCounter;
     public TextField txtPDUCounter;
