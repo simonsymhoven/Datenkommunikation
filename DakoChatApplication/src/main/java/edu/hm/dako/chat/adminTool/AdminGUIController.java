@@ -24,6 +24,9 @@ import java.util.Map;
 
 public class AdminGUIController extends Application {
 
+    /**
+     * all Fields of corresponding .fxml sheet
+     */
     @FXML
     private TreeView<String> treeView;
     public TextField txtSelectedFile;
@@ -41,15 +44,35 @@ public class AdminGUIController extends Application {
     public TableColumn logoutColumn;
     public TableColumn loginColumn;
 
+
     private String selectedFile;
+
+    /**
+     * userMap stores for each client the corresponding TableItem which is
+     * filled with certain values
+     */
     private HashMap<String, TableItem> userMap;
     private int pduCounter;
+
+    /**
+     * data is used to set the tableView, contains all TableItems of userMap
+     */
     private final ObservableList<TableItem> data = FXCollections.observableArrayList();
 
+    /**
+     * entry point, calls implicit the {@link AdminGUIController#start(Stage stage)},
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+
+    /**
+     * load the fxml sheet and shows the stage to user
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(AdminGUIController.class.getResource("AdminGUI.fxml"));
@@ -60,6 +83,17 @@ public class AdminGUIController extends Application {
         stage.show();
     }
 
+
+    /**
+     * implicit called function if fxml sheet to this Controller is loaded
+     *
+     * sets the rootItem of  {@link AdminGUIController#treeView} and adds all files of
+     * the log/ directory.
+     *
+     * for each column of {@link AdminGUIController#tableView} the CellValueFactory will be set
+     * ( PropertyValueFactory has to be the same as the value of
+     * {@link TableItem#TableItem(String, int, int, int, int, int, String, String, String)})
+     */
     @FXML
     public void initialize(){
         TreeItem<String> rootItem = new TreeItem<>("logs", new ImageView(
@@ -88,6 +122,11 @@ public class AdminGUIController extends Application {
         timeColumn.setCellValueFactory(new PropertyValueFactory("estimatedTime"));
     }
 
+    /**
+     * this method is called if one of the treeView items is selected.
+     *
+     * one thread for the load animation and one for the log analysis
+     */
     @FXML
     public void handleMouseEvent() {
         TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
@@ -135,6 +174,12 @@ public class AdminGUIController extends Application {
     }
 
 
+    /**
+     * analyse each row of the csv file and handle the information, depends on the PDU type
+     *
+     * @param selectedItem
+     * @return
+     */
     private int analyse(TreeItem<String> selectedItem) {
         String path = "/" + selectedItem.getParent().getValue() + "/" + selectedItem.getValue();
         selectedFile = path;
@@ -207,6 +252,13 @@ public class AdminGUIController extends Application {
         return 400;
     }
 
+
+    /**
+     * helper method to calculate the difference between to timeStamps
+     * @param d1
+     * @param d2
+     * @return
+     */
     private String calculateTimeDif(String d1, String d2){
         try {
             SimpleDateFormat df = new SimpleDateFormat(
@@ -227,6 +279,9 @@ public class AdminGUIController extends Application {
         return "NaN";
     }
 
+    /**
+     * helper method to set the error message alert in a separate GUI thread
+     */
     private void setErrorMessage() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
