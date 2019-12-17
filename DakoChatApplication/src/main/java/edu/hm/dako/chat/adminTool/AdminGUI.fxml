@@ -23,16 +23,16 @@
          <TreeView fx:id="treeView" onMouseClicked="#handleMouseEvent" prefHeight="300.0" prefWidth="203.0" />
          <AnchorPane prefHeight="396.0" prefWidth="659.0">
             <children>
-               <Label layoutX="76.0" layoutY="46.0" text="Anzahl Clients:" />
-               <Label layoutX="85.0" layoutY="84.0" text="Anzahl PDUs:" />
-               <TextField fx:id="txtAnzahlClients" editable="false" layoutX="181.0" layoutY="41.0" prefHeight="27.0" prefWidth="623.0" />
-               <TextField fx:id="txtAnzahlPDUs" editable="false" layoutX="181.0" layoutY="79.0" prefHeight="27.0" prefWidth="623.0" />
-               <Label layoutX="31.0" layoutY="6.0" text="Ausgewähltes Log-File:" />
+               <Label layoutX="118.0" layoutY="46.0" text="# Clients:" />
+               <Label layoutX="124.0" layoutY="84.0" text="# PDUs:" />
+               <TextField fx:id="txtClientsCounter" editable="false" layoutX="181.0" layoutY="41.0" prefHeight="27.0" prefWidth="623.0" />
+               <TextField fx:id="txtPDUCounter" editable="false" layoutX="181.0" layoutY="79.0" prefHeight="27.0" prefWidth="623.0" />
+               <Label layoutX="122.0" layoutY="6.0" text="Log-File:" />
                <TextField fx:id="txtSelectedFile" editable="false" layoutX="181.0" layoutY="1.0" prefHeight="27.0" prefWidth="623.0" />
                <TableView fx:id="tableView" layoutX="19.0" layoutY="160.0" prefHeight="233.0" prefWidth="788.0">
                   <columns>
                      <TableColumn fx:id="clientColumn" prefWidth="98.0" text="Client" />
-                     <TableColumn fx:id="pduColumn" prefWidth="98.0" text="Anzahl PDUs">
+                     <TableColumn fx:id="pduColumn" prefWidth="98.0" text="PDUs">
                         <columns>
                            <TableColumn fx:id="pduUndefineColumn" minWidth="0.0" prefWidth="75.0" text="# Undefined" />
                            <TableColumn fx:id="pduLoginColumn" minWidth="0.0" prefWidth="54.0" text="# Login" />
@@ -45,7 +45,7 @@
                      <TableColumn fx:id="logoutColumn" prefWidth="125.0" text="Logout" />
                      <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Zeit (HH:mm:ss)" />
                   </columns></TableView>
-               <Label layoutX="26.0" layoutY="131.0" text="Detiallierte Informationen:" />
+               <Label layoutX="26.0" layoutY="131.0" text="Informationen pro Client:" />
             </children></AnchorPane>
       </children>
    </HBox>

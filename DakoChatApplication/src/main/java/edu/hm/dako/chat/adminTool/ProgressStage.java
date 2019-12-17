@@ -8,19 +8,26 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.ProgressIndicator;
 
+/**
+ * Class to handle the load animation while tool analyses the log-file
+ */
 public class ProgressStage {
-    public static Stage stageForProgressIndicator;
-    public static ProgressIndicator progressIndicator;
+    /**
+     * default Stage
+     */
+    final static Stage stageForProgressIndicator = new Stage();
 
-    public ProgressStage(){
-        this.stageForProgressIndicator = new Stage();
-        this.progressIndicator = new ProgressIndicator();
-    }
+    /**
+     * default progressIndicator
+     */
+    final static ProgressIndicator progressIndicator = new ProgressIndicator(-1);
 
+    /**
+     * starts the load animation in a new stage with a infinity progressbar
+     */
     public static void startProgress() {
         FlowPane root = new FlowPane();
         stageForProgressIndicator.setResizable(false);
-        progressIndicator.setProgress(-1);
 
         HBox hb = new HBox();
         hb.setSpacing(5);
@@ -40,6 +47,9 @@ public class ProgressStage {
         stageForProgressIndicator.show();
     }
 
+    /**
+     * closes the stage and hide it
+     */
     public void stopProgress(){
         stageForProgressIndicator.close();
     }

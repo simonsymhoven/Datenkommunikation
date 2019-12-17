@@ -1,6 +1,7 @@
 package edu.hm.dako.chat.adminTool;
 
 import edu.hm.dako.chat.common.AuditLogPduType;
+import edu.hm.dako.chat.common.ExceptionHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -14,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,42 +25,26 @@ import java.util.Map;
 public class AdminGUIController extends Application {
 
     @FXML
-    public TreeView treeView;
-    @FXML
+    public TreeView<String> treeView;
     public TextField txtSelectedFile;
-    @FXML
-    public TextField txtAnzahlClients;
-    @FXML
-    public TextField txtAnzahlPDUs;
-    @FXML
-    public TableView tableView;
-
-    @FXML
+    public TextField txtClientsCounter;
+    public TextField txtPDUCounter;
+    public TableView<TableItem> tableView;
     public TableColumn clientColumn;
-    @FXML
     public TableColumn pduColumn;
-    @FXML
     public TableColumn timeColumn;
-    @FXML
     public TableColumn pduLoginColumn;
-    @FXML
     public TableColumn pduLogoutColumn;
-    @FXML
     public TableColumn pduFinishColumn;
-    @FXML
     public TableColumn pduUndefineColumn;
-    @FXML
     public TableColumn pduMessagesColumn;
-    @FXML
     public TableColumn logoutColumn;
-    @FXML
     public TableColumn loginColumn;
 
     private String selectedFile;
     private HashMap<String, TableItem> userMap;
     private int pduCounter;
-    public ObservableList<TableItem> data = FXCollections.observableArrayList();
-    private TreeItem<String> rootItem;
+    private final ObservableList<TableItem> data = FXCollections.observableArrayList();
 
     public static void main(String[] args) {
         launch(args);
@@ -78,17 +62,18 @@ public class AdminGUIController extends Application {
 
     @FXML
     public void initialize(){
-        // Initialisiert die TreeView mit allen LogFiles
-        rootItem = new TreeItem<> ("logs", new ImageView(
+        TreeItem<String> rootItem = new TreeItem<>("logs", new ImageView(
             new Image(getClass().getResourceAsStream("resources/folder.png"))));
         rootItem.setExpanded(true);
 
         File dir = new File(System.getProperty("user.dir") + "/logs/");
         File[] files = dir.listFiles((dire, name) -> name.toLowerCase().endsWith(".csv"));
-        for (File file : files) {
-            TreeItem<String> item = new TreeItem<> (file.getName(),new ImageView(
-                new Image(getClass().getResourceAsStream("resources/file.png"))));
-            rootItem.getChildren().add(item);
+        if (files != null) {
+            for (File file : files) {
+                TreeItem<String> item = new TreeItem<> (file.getName(),new ImageView(
+                    new Image(getClass().getResourceAsStream("resources/file.png"))));
+                rootItem.getChildren().add(item);
+            }
         }
 
         treeView.setRoot(rootItem);
@@ -105,23 +90,15 @@ public class AdminGUIController extends Application {
 
     @FXML
     public void handleMouseEvent() {
-        TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+        TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
 
         ProgressStage ps = new ProgressStage();
         if (selectedItem.getValue().contains(".csv")) {
-            // Thread für Progress Indicator
-            Runnable progressTask = new Runnable() {
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            ps.startProgress();
-                        }
-                    });
 
-                }
-            };
+            // Thread für Progress Indicator
+            Runnable progressTask = () -> Platform.runLater(ProgressStage::startProgress);
             new Thread(progressTask).start();
+
             // Thread für Analyse
             Runnable r = new Runnable() {
                 int returnValue = 2;
@@ -134,9 +111,9 @@ public class AdminGUIController extends Application {
                         ps.stopProgress();
                         if (returnValue == 200) {
                             txtSelectedFile.setText(selectedFile);
-                            txtAnzahlClients.setText(String.valueOf(userMap.size()));
+                            txtClientsCounter.setText(String.valueOf(userMap.size()));
                             // -1 because of csv header
-                            txtAnzahlPDUs.setText(String.valueOf(pduCounter-1));
+                            txtPDUCounter.setText(String.valueOf(pduCounter-1));
                             tableView.setItems(data);
 
                         } else {
@@ -158,7 +135,7 @@ public class AdminGUIController extends Application {
     }
 
 
-    public int analyse(TreeItem<String> selectedItem) {
+    private int analyse(TreeItem<String> selectedItem) {
         String path = "/" + selectedItem.getParent().getValue() + "/" + selectedItem.getValue();
         selectedFile = path;
 
@@ -170,98 +147,92 @@ public class AdminGUIController extends Application {
 
         try {
             FileReader fr = new FileReader(System.getProperty("user.dir") + path);
-            BufferedReader br = new BufferedReader(fr);
+            try (BufferedReader br = new BufferedReader(fr)) {
+                while ((line = br.readLine()) != null) {
 
-            while ((line = br.readLine()) != null) {
+                    String[] pdu = line.split(cvsSplitBy);
 
-                String[] pdu = line.split(cvsSplitBy);
-
-                if (pdu[0].equals(AuditLogPduType.LOGIN_REQUEST.getDescription())) {
-                    if (!userMap.containsKey(pdu[3])) {
-                        TableItem ti = new TableItem(
-                            pdu[3],
-                            0,
-                            1,
-                            0,
-                            0,
-                            0,
-                            pdu[4],
-                            "",
-                            ""
-                        );
+                    if (pdu[0].equals(AuditLogPduType.LOGIN_REQUEST.getDescription())) {
+                        if (!userMap.containsKey(pdu[3])) {
+                            TableItem ti = new TableItem(
+                                pdu[3],
+                                0,
+                                1,
+                                0,
+                                0,
+                                0,
+                                pdu[4],
+                                "",
+                                ""
+                            );
+                            userMap.put(pdu[3], ti);
+                        } else {
+                            TableItem ti = userMap.get(pdu[3]);
+                            ti.setLoginTime(pdu[4]);
+                            userMap.put(pdu[3], ti);
+                        }
+                    } else if (pdu[0].equals(AuditLogPduType.LOGOUT_REQUEST.getDescription())) {
+                        TableItem ti = userMap.get(pdu[3]);
+                        ti.setLogoutTime(pdu[4]);
+                        ti.setPduLogoutCounter(ti.getPduLogoutCounter() + 1);
+                        userMap.put(pdu[3], ti);
+                    } else if (pdu[0].equals(AuditLogPduType.CHAT_MESSAGE_REQUEST.getDescription())) {
+                        TableItem ti = userMap.get(pdu[3]);
+                        ti.setPduMessageCounter(ti.getPduMessageCounter() + 1);
+                        userMap.put(pdu[3], ti);
+                    } else if (pdu[0].equals(AuditLogPduType.FINISH_AUDIT_REQUEST.getDescription())) {
+                        TableItem ti = userMap.get(pdu[3]);
+                        ti.setPduFinishCounter(ti.getPduFinishCounter() + 1);
+                        userMap.put(pdu[3], ti);
+                    } else if (pdu[0].equals(AuditLogPduType.UNDEFINED.getDescription())) {
+                        TableItem ti = userMap.get(pdu[3]);
+                        ti.setPduUndefineCounter(ti.getPduUndefineCounter() + 1);
                         userMap.put(pdu[3], ti);
                     }
-                } else if (pdu[0].equals(AuditLogPduType.LOGOUT_REQUEST.getDescription())) {
-                    TableItem ti = userMap.get(pdu[3]);
-                    ti.setLogoutTime(pdu[4]);
-                    ti.setPduLogoutCounter(ti.getPduLogoutCounter() + 1);
-                    userMap.put(pdu[3], ti);
-                } else if (pdu[0].equals(AuditLogPduType.CHAT_MESSAGE_REQUEST.getDescription())) {
-                    TableItem ti = userMap.get(pdu[3]);
-                    ti.setPduMessageCounter(ti.getPduMessageCounter() + 1);
-                    userMap.put(pdu[3], ti);
-                } else if (pdu[0].equals(AuditLogPduType.FINISH_AUDIT_REQUEST.getDescription())) {
-                    TableItem ti = userMap.get(pdu[3]);
-                    ti.setPduFinishCounter(ti.getPduFinishCounter() + 1);
-                    userMap.put(pdu[3], ti);
-                } else if (pdu[0].equals(AuditLogPduType.UNDEFINED.getDescription())) {
-                    TableItem ti = userMap.get(pdu[3]);
-                    ti.setPduUndefineCounter(ti.getPduUndefineCounter() + 1);
-                    userMap.put(pdu[3], ti);
+                    pduCounter++;
                 }
-                pduCounter++;
-            }
 
-            for (Map.Entry<String, TableItem> entry : userMap.entrySet()) {
-                String s_logout = entry.getValue().getLogoutTime();
-                String s_login = entry.getValue().getLoginTime();
-                entry.getValue().setEstimatedTime(calculateTiemDif(s_logout,s_login));
-                data.add(entry.getValue());
-            }
+                for (Map.Entry<String, TableItem> entry : userMap.entrySet()) {
+                    entry.getValue().setEstimatedTime(
+                        calculateTimeDif(entry.getValue().getLogoutTime(), entry.getValue().getLoginTime()));
+                    data.add(entry.getValue());
+                }
 
-            br.close();
+            }
             return 200;
         } catch (IOException e ) {
-            setErrorMessage("AdminGUIController", "Bei der Analayse ist ein Fehler aufgetreten. " +
-                "Bitte Vorgang wiederholen", 90);
-            e.printStackTrace();
+            setErrorMessage();
+            ExceptionHandler.logException(e);
         }
         return 400;
     }
 
-    public String calculateTiemDif(String d1, String d2){
+    private String calculateTimeDif(String d1, String d2){
         try {
-            Date logout = new SimpleDateFormat(
-                "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(d1);
-            Date login = new SimpleDateFormat(
-                "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US).parse(d2);
+            SimpleDateFormat df = new SimpleDateFormat(
+                "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+            Date logout = df.parse(d1);
+            Date login = df.parse(d2);
 
             long diff = logout.getTime() - login.getTime();
-
             long diffSeconds = diff / 1000 % 60;
             long diffMinutes = diff / (60 * 1000) % 60;
             long diffHours = diff / (60 * 60 * 1000) % 24;
-            long diffDays = diff / (24 * 60 * 60 * 1000);
-
-            System.out.print(diffDays + " days, ");
-            System.out.print(diffHours + " hours, ");
-            System.out.print(diffMinutes + " minutes, ");
-            System.out.print(diffSeconds + " seconds.");
 
             return diffHours + ":" + diffMinutes + ":" + diffSeconds;
         } catch (Exception e) {
-            e.printStackTrace();
+            ExceptionHandler.logException(e);
         }
 
-        return "";
+        return "NaN";
     }
 
-    public void setErrorMessage(String sender, String errorMessage, long errorCode) {
+    private void setErrorMessage() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Es ist ein Fehler im " + sender + " aufgetreten");
-            alert.setHeaderText("Fehlerbehandlung (Fehlercode = " + errorCode + ")");
-            alert.setContentText(errorMessage);
+            alert.setTitle("Es ist ein Fehler im AdminGUIController aufgetreten");
+            alert.setHeaderText("Fehlerbehandlung (Fehlercode = " + 90 + ")");
+            alert.setContentText("Bei der Analayse ist ein Fehler aufgetreten. Bitte Vorgang wiederholen");
             alert.showAndWait();
         });
     }
