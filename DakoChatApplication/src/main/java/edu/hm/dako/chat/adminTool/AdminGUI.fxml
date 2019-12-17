@@ -45,7 +45,7 @@
                      <TableColumn fx:id="logoutColumn" prefWidth="125.0" text="Logout" />
                      <TableColumn fx:id="timeColumn" prefWidth="119.0" text="Zeit (HH:mm:ss)" />
                   </columns></TableView>
-               <Label layoutX="26.0" layoutY="131.0" text="Informationen pro Client:" />
+               <Label layoutX="26.0" layoutY="131.0" text="Informationen pro Client (Login und Logout liefert stets die Werte für die letzte aktive Session):" />
             </children></AnchorPane>
       </children>
    </HBox>

@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+
 public class AdminGUIController extends Application {
 
     /**
@@ -214,6 +215,7 @@ public class AdminGUIController extends Application {
                         } else {
                             TableItem ti = userMap.get(pdu[3]);
                             ti.setLoginTime(pdu[4]);
+                            ti.setPduLoginCounter(ti.getPduLoginCounter() + 1);
                             userMap.put(pdu[3], ti);
                         }
                     } else if (pdu[0].equals(AuditLogPduType.LOGOUT_REQUEST.getDescription())) {
