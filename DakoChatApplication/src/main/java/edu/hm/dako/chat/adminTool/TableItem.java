@@ -2,18 +2,14 @@ package edu.hm.dako.chat.adminTool;
 
 public class TableItem {
     private String clientName;
-    private String pduCounter;
-    private String login;
-    private String logout;
-    private String time;
-
-    public TableItem(String clientName, String pduCounter, String login, String logout, String time) {
-        this.clientName = clientName;
-        this.pduCounter = pduCounter;
-        this.time = time;
-        this.login = login;
-        this.logout = logout;
-    }
+    private int pduMessageCounter;
+    private int pduLoginCounter;
+    private int pduLogoutCounter;
+    private int pduUndefineCounter;
+    private int pduFinishCounter;
+    private String loginTime;
+    private String logoutTime;
+    private String estimatedTime;
 
     public String getClientName() {
         return clientName;
@@ -23,34 +19,89 @@ public class TableItem {
         this.clientName = clientName;
     }
 
-    public String getPduCounter() {
-        return pduCounter;
+    public int getPduMessageCounter() {
+        return pduMessageCounter;
     }
 
-    public void setPduCounter(String pduCounter) {
-        this.pduCounter = pduCounter;
-    }
-    public String getTime() {
-        return time;
+    public void setPduMessageCounter(int pduMessageCounter) {
+        this.pduMessageCounter = pduMessageCounter;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public int getPduLoginCounter() {
+        return pduLoginCounter;
     }
 
-    public String getLogin() {
-        return login;
+    public void setPduLoginCounter(int pduLoginCounter) {
+        this.pduLoginCounter = pduLoginCounter;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public int getPduLogoutCounter() {
+        return pduLogoutCounter;
     }
 
-    public String getLogout() {
-        return logout;
+    public void setPduLogoutCounter(int pduLogoutCounter) {
+        this.pduLogoutCounter = pduLogoutCounter;
     }
 
-    public void setLogout(String logout) {
-        this.logout = logout;
+    public int getPduUndefineCounter() {
+        return pduUndefineCounter;
+    }
+
+    public void setPduUndefineCounter(int pduUndefineCounter) {
+        this.pduUndefineCounter = pduUndefineCounter;
+    }
+
+    public int getPduFinishCounter() {
+        return pduFinishCounter;
+    }
+
+    public void setPduFinishCounter(int pduFinishCounter) {
+        this.pduFinishCounter = pduFinishCounter;
+    }
+
+    public String getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(String loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public String getLogoutTime() {
+        return logoutTime;
+    }
+
+    public void setLogoutTime(String logoutTime) {
+        this.logoutTime = logoutTime;
+    }
+
+    public String getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(String estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public TableItem(String clientName,
+                     int pduMessageCounter,
+                     int pduLoginCounter,
+                     int pduLogoutCounter,
+                     int pduUndefineCounter,
+                     int pduFinishCounter,
+                     String loginTime,
+                     String logoutTime,
+                     String estimatedTime) {
+        this.clientName = clientName;
+        this.pduMessageCounter = pduMessageCounter;
+        this.pduLoginCounter = pduLoginCounter;
+        this.pduLogoutCounter = pduLogoutCounter;
+        this.pduUndefineCounter = pduUndefineCounter;
+        this.pduFinishCounter = pduFinishCounter;
+        this.loginTime = loginTime;
+        this.logoutTime = logoutTime;
+        this.estimatedTime = estimatedTime;
+
+
     }
 }

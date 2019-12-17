@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +34,7 @@ public class AdminGUIController extends Application {
     public TextField txtAnzahlPDUs;
     @FXML
     public TableView tableView;
+
     @FXML
     public TableColumn clientColumn;
     @FXML
@@ -42,14 +42,25 @@ public class AdminGUIController extends Application {
     @FXML
     public TableColumn timeColumn;
     @FXML
-    public TableColumn loginColumn;
+    public TableColumn pduLoginColumn;
+    @FXML
+    public TableColumn pduLogoutColumn;
+    @FXML
+    public TableColumn pduFinishColumn;
+    @FXML
+    public TableColumn pduUndefineColumn;
+    @FXML
+    public TableColumn pduMessagesColumn;
     @FXML
     public TableColumn logoutColumn;
+    @FXML
+    public TableColumn loginColumn;
 
     private String selectedFile;
-    private HashMap<String, String[]> userMap;
+    private HashMap<String, TableItem> userMap;
     private int pduCounter;
     public ObservableList<TableItem> data = FXCollections.observableArrayList();
+    private TreeItem<String> rootItem;
 
     public static void main(String[] args) {
         launch(args);
@@ -61,32 +72,35 @@ public class AdminGUIController extends Application {
         Parent root = loader.load();
         stage.setTitle("Administrationsprogramm");
         stage.setResizable(false);
-        stage.setScene(new Scene(root, 800, 400));
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
     @FXML
     public void initialize(){
         // Initialisiert die TreeView mit allen LogFiles
-        TreeItem<String> rootItem = new TreeItem<> ("logs", new ImageView(
+        rootItem = new TreeItem<> ("logs", new ImageView(
             new Image(getClass().getResourceAsStream("resources/folder.png"))));
         rootItem.setExpanded(true);
 
-        File tcpDir = new File(System.getProperty("user.dir") + "/logs/");
-        File[] tcpFiles = tcpDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".csv"));
-        for (File tcpFile : tcpFiles) {
-            TreeItem<String> item = new TreeItem<> (tcpFile.getName(),new ImageView(
+        File dir = new File(System.getProperty("user.dir") + "/logs/");
+        File[] files = dir.listFiles((dire, name) -> name.toLowerCase().endsWith(".csv"));
+        for (File file : files) {
+            TreeItem<String> item = new TreeItem<> (file.getName(),new ImageView(
                 new Image(getClass().getResourceAsStream("resources/file.png"))));
             rootItem.getChildren().add(item);
         }
 
         treeView.setRoot(rootItem);
-
         clientColumn.setCellValueFactory(new PropertyValueFactory("clientName"));
-        pduColumn.setCellValueFactory(new PropertyValueFactory("pduCounter"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory("time"));
-        loginColumn.setCellValueFactory(new PropertyValueFactory("login"));
-        logoutColumn.setCellValueFactory(new PropertyValueFactory("logout"));
+        pduLoginColumn.setCellValueFactory(new PropertyValueFactory("pduLoginCounter"));
+        pduLogoutColumn.setCellValueFactory(new PropertyValueFactory("pduLogoutCounter"));
+        pduMessagesColumn.setCellValueFactory(new PropertyValueFactory("pduMessageCounter"));
+        pduFinishColumn.setCellValueFactory(new PropertyValueFactory("pduFinishCounter"));
+        pduUndefineColumn.setCellValueFactory(new PropertyValueFactory("pduUndefineCounter"));
+        loginColumn.setCellValueFactory(new PropertyValueFactory("loginTime"));
+        logoutColumn.setCellValueFactory(new PropertyValueFactory("logoutTime"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory("estimatedTime"));
     }
 
     @FXML
@@ -95,7 +109,6 @@ public class AdminGUIController extends Application {
 
         ProgressStage ps = new ProgressStage();
         if (selectedItem.getValue().contains(".csv")) {
-
             // Thread für Progress Indicator
             Runnable progressTask = new Runnable() {
                 public void run() {
@@ -152,6 +165,7 @@ public class AdminGUIController extends Application {
         String line = "";
         String cvsSplitBy = ";";
         userMap = new HashMap<>();
+        data.clear();
         pduCounter = 0;
 
         try {
@@ -164,34 +178,45 @@ public class AdminGUIController extends Application {
 
                 if (pdu[0].equals(AuditLogPduType.LOGIN_REQUEST.getDescription())) {
                     if (!userMap.containsKey(pdu[3])) {
-                        String[] values = new String[3];
-                        values[0] = "0";
-                        values[1] = pdu[4];
-                        userMap.put(pdu[3], values);
+                        TableItem ti = new TableItem(
+                            pdu[3],
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            pdu[4],
+                            "",
+                            ""
+                        );
+                        userMap.put(pdu[3], ti);
                     }
                 } else if (pdu[0].equals(AuditLogPduType.LOGOUT_REQUEST.getDescription())) {
-                        String[] values = userMap.get(pdu[3]);
-                        values[2] = pdu[4];
-                        userMap.put(pdu[3], values);
-                } else {
-                    if (pdu[0].equals(AuditLogPduType.CHAT_MESSAGE_REQUEST.getDescription())) {
-                        String[] values = userMap.get(pdu[3]);
-                        values[0] = String.valueOf(Integer.parseInt(userMap.get(pdu[3])[0]) + 1);
-                        userMap.put(pdu[3], values);
-                    }
+                    TableItem ti = userMap.get(pdu[3]);
+                    ti.setLogoutTime(pdu[4]);
+                    ti.setPduLogoutCounter(ti.getPduLogoutCounter() + 1);
+                    userMap.put(pdu[3], ti);
+                } else if (pdu[0].equals(AuditLogPduType.CHAT_MESSAGE_REQUEST.getDescription())) {
+                    TableItem ti = userMap.get(pdu[3]);
+                    ti.setPduMessageCounter(ti.getPduMessageCounter() + 1);
+                    userMap.put(pdu[3], ti);
+                } else if (pdu[0].equals(AuditLogPduType.FINISH_AUDIT_REQUEST.getDescription())) {
+                    TableItem ti = userMap.get(pdu[3]);
+                    ti.setPduFinishCounter(ti.getPduFinishCounter() + 1);
+                    userMap.put(pdu[3], ti);
+                } else if (pdu[0].equals(AuditLogPduType.UNDEFINED.getDescription())) {
+                    TableItem ti = userMap.get(pdu[3]);
+                    ti.setPduUndefineCounter(ti.getPduUndefineCounter() + 1);
+                    userMap.put(pdu[3], ti);
                 }
                 pduCounter++;
             }
 
-            for (Map.Entry<String, String[]> entry : userMap.entrySet()) {
-                TableItem ti = new TableItem(
-                    entry.getKey(),
-                    entry.getValue()[0],
-                    entry.getValue()[1],
-                    entry.getValue()[2],
-                    calculateTiemDif(entry.getValue()[2], entry.getValue()[1])
-                );
-                data.add(ti);
+            for (Map.Entry<String, TableItem> entry : userMap.entrySet()) {
+                String s_logout = entry.getValue().getLogoutTime();
+                String s_login = entry.getValue().getLoginTime();
+                entry.getValue().setEstimatedTime(calculateTiemDif(s_logout,s_login));
+                data.add(entry.getValue());
             }
 
             br.close();
