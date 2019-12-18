@@ -13,6 +13,9 @@ public interface AuditLogPduDaoInterface<T> {
      * Then, the counter for new messages is reset and a list of all recently added messages is returned.
      *
      * @return list of new messages
+     * @throws InterruptedException if any thread interrupted the current thread before or
+     *                              while the current thread was waiting. The <em>interrupted status</em> of the
+     *                              current thread is cleared when this exception is thrown.
      */
     List<T> getAllNew() throws InterruptedException;
 
