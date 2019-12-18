@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BenchmarkingClientGuiFx2.jar" type="JarApplication" folderName="Applications" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/BenchmarkingClientGuiFx2/BenchmarkingClientGuiFx2.jar" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>

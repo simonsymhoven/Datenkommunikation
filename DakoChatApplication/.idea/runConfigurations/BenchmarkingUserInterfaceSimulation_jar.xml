@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BenchmarkingUserInterfaceSimulation.jar" type="JarApplication" folderName="Applications" singleton="false">
+    <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/BenchmarkingUserInterfaceSimulation/BenchmarkingUserInterfaceSimulation.jar" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2" />
+  </configuration>
+</component>
