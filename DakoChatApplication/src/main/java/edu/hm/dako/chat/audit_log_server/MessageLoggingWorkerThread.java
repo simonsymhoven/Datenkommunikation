@@ -48,6 +48,8 @@ public class MessageLoggingWorkerThread extends Thread {
                         .append(auditLogPDU.getUserName())
                         .append(';')
                         .append(new Date(auditLogPDU.getAuditTime()).toString())
+                        .append(';')
+                        .append(auditLogPDU.getMessage())
                         .append(';');
                     getCsvWriter()
                         .newLine();
