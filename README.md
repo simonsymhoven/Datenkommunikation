@@ -41,7 +41,7 @@ Im master-Branch befindet sich immer eine auffähige Version der Chatt-Applicati
 Das Repo enthält einen Ordner **Aufgabe 1**, in dem alle erzeugten Diagramme zur Dokumentation gesammelt werden. Dort liegt außerdem eine .ppt-Vorlage, in der nachher die Charts einfügen werden können.
 
 ## Teilaufgabe 2
-Source Code im Projektordner
+Siehe **DakoChatApplication**
 
 ## Teilaufgabe 3
 Das Repo enthält einen Ordner **Aufgabe 3**, in dem alle erzeugten Benchmark Protokolldateien enthalten sind und die dazugehörigen Screenshots vom JConsole.
