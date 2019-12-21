@@ -1,0 +1,6 @@
+PduType;ClientThreadName;ServerThreadName;UserName;AuditTime;
+Login ;Client-simon;null;simon;Sun Dec 15 18:24:39 CET 2019;
+Chat  ;Client-simon;null;simon;Sun Dec 15 18:24:45 CET 2019;
+Chat  ;Client-simon;null;simon;Sun Dec 15 18:24:48 CET 2019;
+Chat  ;Client-simon;null;simon;Sun Dec 15 18:24:51 CET 2019;
+Logout;Client-simon;null;simon;Sun Dec 15 18:24:54 CET 2019;
