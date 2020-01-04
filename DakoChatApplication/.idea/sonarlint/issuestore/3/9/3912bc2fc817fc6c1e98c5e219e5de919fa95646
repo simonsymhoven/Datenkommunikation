@@ -1,11 +1,0 @@
-
-|squid:S1149b"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(áô²ø
-osquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(ò×Ûêûÿÿÿÿ
-}squid:S1149"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ˆ˜Ä‚
-hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ºà±¿ÿÿÿÿÿ
-}squid:S1149­"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(¢¢ğ—
-Zsquid:S00107Ÿ"<Method has 8 parameters, which is greater than 7 authorized.(û¢ùùÿÿÿÿ
-|squid:S1149,"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(òô“Ñ
-}squid:S1149©"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(ì°ÓÒ
-osquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(Êÿæúşÿÿÿÿ
-‚squid:S1149…"eReplace the synchronized class "Vector" by an unsynchronized one such as "ArrayList" or "LinkedList".(‘íİÑùÿÿÿÿ
