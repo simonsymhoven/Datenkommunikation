@@ -3,11 +3,13 @@ package edu.hm.dako.chat.audit_log_server;
 import edu.hm.dako.chat.common.AuditLogPDU;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
     /**
      * List of {@link AuditLogPDU}.
+     * TODO: Switch to {@link Deque} instaed of {@link List}
      */
     private final List<AuditLogPDU> messages;
     /**
