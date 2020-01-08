@@ -22,6 +22,8 @@ public class ConnectionWorkerThread extends Thread {
 
     private Connection connection;
 
+    private MessageLoggingWorkerThread messageLogWorker;
+
     public ConnectionWorkerThread(ServerSocketInterface socket, AuditLogPduDaoInterface<AuditLogPDU> model) {
         this.socket = socket;
         this.model = model;
@@ -39,6 +41,7 @@ public class ConnectionWorkerThread extends Thread {
             try {
                 connection = socket.accept();
                 while (!finished && !Thread.currentThread().isInterrupted()) {
+                    checkAndStartMessageLoggingWorker();
                     handleIncomingMessage();
                 }
             } catch (Exception e) {
@@ -51,6 +54,17 @@ public class ConnectionWorkerThread extends Thread {
             }
         }
         closeConnection();
+    }
+
+    /**
+     * Checks if the {@link MessageLoggingWorkerThread} is running and starts it if not.
+     */
+    private void checkAndStartMessageLoggingWorker() {
+        if (messageLogWorker == null || messageLogWorker.isInterrupted()) {
+            messageLogWorker = new MessageLoggingWorkerThread(model);
+            messageLogWorker.setName("MessageLoggingWorkerThread");
+            messageLogWorker.start();
+        }
     }
 
     /**
@@ -71,14 +85,13 @@ public class ConnectionWorkerThread extends Thread {
             log.error("Verbindungsabbruch beim Empfang der naechsten Nachricht vom Client");
             finished = true;
 
+        } catch (IOException e) {
+            log.error("Empfang einer Nachricht fehlgeschlagen");
+            finished = true;
+
         } catch (Exception e) {
-            if (e instanceof IOException) {
-                log.error("Empfang einer Nachricht fehlgeschlagen");
-                finished = true;
-            } else {
-                log.error("Verarbeitung einer Nachricht fehlgeschlagen");
-                ExceptionHandler.logException(e);
-            }
+            log.error("Verarbeitung einer Nachricht fehlgeschlagen");
+            ExceptionHandler.logException(e);
         }
     }
 

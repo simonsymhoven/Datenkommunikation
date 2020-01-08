@@ -1,4 +1,4 @@
-package edu.hm.dako.chat.adminTool;
+package edu.hm.dako.chat.admin_tool;
 
 /**
  * class to store all information about one client

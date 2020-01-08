@@ -1,4 +1,4 @@
-package edu.hm.dako.chat.adminTool;
+package edu.hm.dako.chat.admin_tool;
 
 import edu.hm.dako.chat.common.AuditLogPduType;
 import edu.hm.dako.chat.common.ExceptionHandler;
