@@ -71,14 +71,13 @@ public class ConnectionWorkerThread extends Thread {
             log.error("Verbindungsabbruch beim Empfang der naechsten Nachricht vom Client");
             finished = true;
 
+        } catch (IOException e) {
+            log.error("Empfang einer Nachricht fehlgeschlagen");
+            finished = true;
+
         } catch (Exception e) {
-            if (e instanceof IOException) {
-                log.error("Empfang einer Nachricht fehlgeschlagen");
-                finished = true;
-            } else {
-                log.error("Verarbeitung einer Nachricht fehlgeschlagen");
-                ExceptionHandler.logException(e);
-            }
+            log.error("Verarbeitung einer Nachricht fehlgeschlagen");
+            ExceptionHandler.logException(e);
         }
     }
 
