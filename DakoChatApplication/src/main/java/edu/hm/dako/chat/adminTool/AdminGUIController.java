@@ -15,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,28 +26,35 @@ import java.util.Map;
 
 
 public class AdminGUIController extends Application {
-
-    /**
-     * all Fields of corresponding .fxml sheet
-     */
+    private static final Logger log = Logger.getLogger(AdminGUIController.class);
     @FXML
     private TreeView<String> treeView;
-    public TextField txtSelectedFile;
-    public TextField txtClientsCounter;
-    public TextField txtPDUCounter;
-    public TableView<TableItem> tableView;
-    public TableColumn clientColumn;
-    public TableColumn pduColumn;
-    public TableColumn timeColumn;
-    public TableColumn pduLoginColumn;
-    public TableColumn pduLogoutColumn;
-    public TableColumn pduFinishColumn;
-    public TableColumn pduUndefineColumn;
-    public TableColumn pduMessagesColumn;
-    public TableColumn logoutColumn;
-    public TableColumn loginColumn;
-
-
+    @FXML
+    private TextField txtSelectedFile;
+    @FXML
+    private TextField txtClientsCounter;
+    @FXML
+    private TextField txtPDUCounter;
+    @FXML
+    private TableView<TableItem> tableView;
+    @FXML
+    private TableColumn<TableItem, String> clientColumn;
+    @FXML
+    private TableColumn<TableItem, String> pduMessagesColumn;
+    @FXML
+    private TableColumn<TableItem, String> logoutColumn;
+    @FXML
+    private TableColumn<TableItem, String> loginColumn;
+    @FXML
+    private TableColumn<TableItem, Integer> timeColumn;
+    @FXML
+    private TableColumn<TableItem, Integer> pduLoginColumn;
+    @FXML
+    private TableColumn<TableItem, Integer> pduLogoutColumn;
+    @FXML
+    private TableColumn<TableItem, Integer> pduFinishColumn;
+    @FXML
+    private TableColumn<TableItem, Integer> pduUndefineColumn;
     private String selectedFile;
 
     /**
@@ -62,7 +71,7 @@ public class AdminGUIController extends Application {
 
     /**
      * entry point, calls implicit the {@link AdminGUIController#start(Stage stage)},
-     * @param args
+     * @param args run params
      */
     public static void main(String[] args) {
         launch(args);
@@ -71,17 +80,21 @@ public class AdminGUIController extends Application {
 
     /**
      * load the fxml sheet and shows the stage to user
-     * @param stage
-     * @throws Exception
+     * @param stage stage to show
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(AdminGUIController.class.getResource("AdminGUI.fxml"));
-        Parent root = loader.load();
-        stage.setTitle("Administrationsprogramm");
-        stage.setResizable(false);
-        stage.setScene(new Scene(root));
-        stage.show();
+        try {
+            Parent root = loader.load();
+            stage.setTitle("Administrationsprogramm");
+            stage.setResizable(false);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            log.error(e);
+        }
+
     }
 
 
@@ -112,15 +125,15 @@ public class AdminGUIController extends Application {
         }
 
         treeView.setRoot(rootItem);
-        clientColumn.setCellValueFactory(new PropertyValueFactory("clientName"));
-        pduLoginColumn.setCellValueFactory(new PropertyValueFactory("pduLoginCounter"));
-        pduLogoutColumn.setCellValueFactory(new PropertyValueFactory("pduLogoutCounter"));
-        pduMessagesColumn.setCellValueFactory(new PropertyValueFactory("pduMessageCounter"));
-        pduFinishColumn.setCellValueFactory(new PropertyValueFactory("pduFinishCounter"));
-        pduUndefineColumn.setCellValueFactory(new PropertyValueFactory("pduUndefineCounter"));
-        loginColumn.setCellValueFactory(new PropertyValueFactory("loginTime"));
-        logoutColumn.setCellValueFactory(new PropertyValueFactory("logoutTime"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory("estimatedTime"));
+        clientColumn.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+        pduLoginColumn.setCellValueFactory(new PropertyValueFactory<>("pduLoginCounter"));
+        pduLogoutColumn.setCellValueFactory(new PropertyValueFactory<>("pduLogoutCounter"));
+        pduMessagesColumn.setCellValueFactory(new PropertyValueFactory<>("pduMessageCounter"));
+        pduFinishColumn.setCellValueFactory(new PropertyValueFactory<>("pduFinishCounter"));
+        pduUndefineColumn.setCellValueFactory(new PropertyValueFactory<>("pduUndefineCounter"));
+        loginColumn.setCellValueFactory(new PropertyValueFactory<>("loginTime"));
+        logoutColumn.setCellValueFactory(new PropertyValueFactory<>("logoutTime"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
     }
 
     /**
@@ -178,14 +191,14 @@ public class AdminGUIController extends Application {
     /**
      * analyse each row of the csv file and handle the information, depends on the PDU type
      *
-     * @param selectedItem
-     * @return
+     * @param selectedItem selected Item from TreeView
+     * @return int 200 for success, 400 else
      */
     private int analyse(TreeItem<String> selectedItem) {
         String path = "/" + selectedItem.getParent().getValue() + "/" + selectedItem.getValue();
         selectedFile = path;
 
-        String line = "";
+        String line;
         String cvsSplitBy = ";";
         userMap = new HashMap<>();
         data.clear();
@@ -257,9 +270,9 @@ public class AdminGUIController extends Application {
 
     /**
      * helper method to calculate the difference between to timeStamps
-     * @param d1
-     * @param d2
-     * @return
+     * @param d1 Date 1 as String
+     * @param d2 Date 2 as String
+     * @return Time Difference as String, else NaN
      */
     private String calculateTimeDif(String d1, String d2){
         try {
