@@ -1,17 +1,0 @@
-
-"squid:ClassVariableVisibilityCheck"]Make pduUndefineColumn a static final constant or non-public and provide accessors if needed.(ãÆ¦h8µÊÃŸñ-
-•"squid:ClassVariableVisibilityCheck"]Make txtClientsCounter a static final constant or non-public and provide accessors if needed.(¥Ìá¸úÿÿÿÿ8µÊÃŸñ-
-•"squid:ClassVariableVisibilityCheck"]Make pduMessagesColumn a static final constant or non-public and provide accessors if needed.(ğ·ø¢üÿÿÿÿ8µÊÃŸñ-
-“"squid:ClassVariableVisibilityCheck"[Make txtSelectedFile a static final constant or non-public and provide accessors if needed.(¨“Ûíÿÿÿÿÿ8ğæ¯¡ñ-
-‘"squid:ClassVariableVisibilityCheck"YMake txtPDUCounter a static final constant or non-public and provide accessors if needed.(Ì€‘§şÿÿÿÿ8µÊÃŸñ-
-“"squid:ClassVariableVisibilityCheck"[Make pduFinishColumn a static final constant or non-public and provide accessors if needed.(Ş¤Áûùÿÿÿÿ8µÊÃŸñ-
-"squid:ClassVariableVisibilityCheck"UMake pduColumn a static final constant or non-public and provide accessors if needed.(ÊàŒéüÿÿÿÿ8µÊÃŸñ-
-"squid:ClassVariableVisibilityCheck"VMake timeColumn a static final constant or non-public and provide accessors if needed.(Õ÷Ò‰üÿÿÿÿ8µÊÃŸñ-
-"squid:ClassVariableVisibilityCheck"XMake clientColumn a static final constant or non-public and provide accessors if needed.(ÿßŠóşÿÿÿÿ8µÊÃŸñ-
-"squid:ClassVariableVisibilityCheck"ZMake pduLoginColumn a static final constant or non-public and provide accessors if needed.(ì’êê8µÊÃŸñ-
-Gsquid:S1075"&Remove this hard-coded path-delimiter.(Öà¸–şÿÿÿÿ8ğæ¯¡ñ-
-"squid:ClassVariableVisibilityCheck"XMake logoutColumn a static final constant or non-public and provide accessors if needed.(§œİ±úÿÿÿÿ8µÊÃŸñ-
-Š"squid:ClassVariableVisibilityCheck"WMake loginColumn a static final constant or non-public and provide accessors if needed.(‹å³æ8Š°£ ñ-
-Gsquid:S1075"&Remove this hard-coded path-delimiter.(Öà¸–şÿÿÿÿ8ğæ¯¡ñ-
-“"squid:ClassVariableVisibilityCheck"[Make pduLogoutColumn a static final constant or non-public and provide accessors if needed.(–õ‰’şÿÿÿÿ8µÊÃŸñ-
-"squid:ClassVariableVisibilityCheck"UMake tableView a static final constant or non-public and provide accessors if needed.(Ï÷²şÿÿÿÿ8µÊÃŸñ-
