@@ -28,7 +28,7 @@ public class UdpServer extends AbstractServer {
             String arg = args[0];
             server = new UdpServer(Integer.parseInt(arg));
         }
-        server.start(true);
+        server.start();
     }
 
     /**
