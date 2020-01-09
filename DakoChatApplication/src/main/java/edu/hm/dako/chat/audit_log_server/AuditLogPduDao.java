@@ -10,6 +10,7 @@ public class AuditLogPduDao implements AuditLogPduDaoInterface<AuditLogPDU> {
     /**
      * List of {@link AuditLogPDU}.
      * TODO: Switch to {@link Deque} instaed of {@link List}
+     * TODO: as no second consumer is currently implemented or implement consumer
      */
     private final List<AuditLogPDU> messages;
     /**
