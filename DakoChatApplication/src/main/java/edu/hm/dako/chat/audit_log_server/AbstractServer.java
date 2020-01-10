@@ -56,14 +56,6 @@ public abstract class AbstractServer implements ServerInterface {
      */
     @Override
     public void start() {
-        start(false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start(boolean blocking) {
         try {
             if (connectionWorker == null) {
                 connectionWorker = new ConnectionWorkerThread(getServerSocket(), getModel());
@@ -71,27 +63,9 @@ public abstract class AbstractServer implements ServerInterface {
             }
             connectionWorker.start();
 
-            if (blocking) {
-                connectionWorker.join();
-            }
         } catch (IOException e) {
             log.error("Socket konnte nicht initialisiert werden");
             ExceptionHandler.logException(e);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            log.error("ConnectionWorkerThread wurde unterbrochen");
-            ExceptionHandler.logException(e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() {
-        if (connectionWorker != null) {
-            log.error("ConnectionWorkerThread wird unterbrochen");
-            connectionWorker.interrupt();
         }
     }
 

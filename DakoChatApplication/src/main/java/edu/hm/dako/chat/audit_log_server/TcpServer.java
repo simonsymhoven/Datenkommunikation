@@ -28,7 +28,7 @@ public class TcpServer extends AbstractServer {
             String arg = args[0];
             server = new TcpServer(Integer.parseInt(arg));
         }
-        server.start(true);
+        server.start();
     }
 
     /**

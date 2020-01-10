@@ -106,6 +106,8 @@ public class MessageLoggingWorkerThread extends Thread {
             .append("UserName")
             .append(';')
             .append("AuditTime")
+            .append(';')
+            .append("Message")
             .append(';');
         csvWriter.newLine();
     }

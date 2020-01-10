@@ -27,7 +27,6 @@ public class ConnectionWorkerThread extends Thread {
     public ConnectionWorkerThread(ServerSocketInterface socket, AuditLogPduDaoInterface<AuditLogPDU> model) {
         this.socket = socket;
         this.model = model;
-        setDaemon(true);
     }
 
     /**
